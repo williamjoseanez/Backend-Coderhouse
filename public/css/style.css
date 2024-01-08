@@ -1,0 +1,17 @@
+h1 {
+  color: rgb(28, 28, 228);
+  background-color: rgb(3, 3, 3);
+  text-align: center;
+  border-radius: 5%;
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.container img {
+  width: 250px;
+  border-radius: 30%;
+}

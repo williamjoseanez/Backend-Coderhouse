@@ -1,0 +1,128 @@
+[
+    {
+      "id": 1,
+      "title": "Jamon",
+      "description": "Cocido",
+      "price": 700,
+      "img": "sin imagen para mostrar",
+      "code": "abc123",
+      "stock": "30"
+    },
+    {
+      "id": 2,
+      "title": "Punta de Agua",
+      "description": "Cremoso",
+      "price": 3200,
+      "img": "sin imagen para mostrar",
+      "code": "abc124",
+      "stock": "40"
+    },
+    {
+      "id": 3,
+      "title": "Manaos",
+      "description": "Cola",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc125",
+      "stock": "40"
+    },
+    {
+      "id": 4,
+      "title": "Manaos",
+      "description": "lima",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc126",
+      "stock": "40"
+    },
+    {
+      "id": 5,
+      "title": "Manaos",
+      "description": "naranja",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc127",
+      "stock": "40"
+    },
+    {
+      "id": 6,
+      "title": "Manaos",
+      "description": "tonica",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc128",
+      "stock": "40"
+    },
+    {
+      "id": 7,
+      "title": "Manaos",
+      "description": "guarana",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc129",
+      "stock": "40"
+    },
+    {
+      "id": 8,
+      "title": "Manaos",
+      "description": "cola zero",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc130",
+      "stock": "40"
+    },
+    {
+      "id": 9,
+      "title": "Manaos",
+      "description": "agua sin gas",
+      "price": 400,
+      "img": "sin imagen para mostrar",
+      "code": "abc131",
+      "stock": "40"
+    },
+    {
+      "id": 10,
+      "title": "Manaos",
+      "description": "agua con gas",
+      "price": 500,
+      "img": "sin imagen para mostrar",
+      "code": "abc132",
+      "stock": "40"
+    },
+    {
+      "id": 11,
+      "title": "coca cola",
+      "description": "retornable 2l",
+      "price": 1100,
+      "img": "sin imagen para mostrar",
+      "code": "abc133",
+      "stock": "40"
+    },
+    {
+      "id": 12,
+      "title": "Fanta",
+      "description": "Cdescartable 2.25ml",
+      "price": 1600,
+      "img": "sin imagen para mostrar",
+      "code": "abc134",
+      "stock": "40"
+    },
+    {
+      "id": 13,
+      "title": "7up",
+      "description": "ColaDescartable 2.25ml",
+      "price": 1450,
+      "img": "sin imagen para mostrar",
+      "code": "abc135",
+      "stock": "40"
+    },
+    {
+      "id": 14,
+      "title": "Cepita",
+      "description": "Naranja 1L",
+      "price": 950,
+      "img": "sin imagen para mostrar",
+      "code": "abc136",
+      "stock": "40"
+    }
+  ]
