@@ -40,63 +40,45 @@ router.get("/:pid", async (req, res) => {
   }
 });
 
+//Agregar un Nuevo Producto
+router.post("/", async (req, res) => {
+  try {
+    const nuevoProducto = req.body;
+    await products.addProduct(nuevoProducto);
+    res.status(201).json({ message: "Producto agregado exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al agregar el producto" });
+  }
+});
 // creamos metodo para actualizar producto
 
-router.put("/:pid", (req, res) => {
-  // logica de actualizacion del producto
-  const { pid } = req.params;
-  const { title, description, price, img, code, stock } = req.body;
-  const productoActualizadoIndex = products.findIndex(
-    (products) => products.pid === parseInt(pid)
-  );
+router.put("/:pid", async (req, res) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    const productoActualizado = req.body;
+    await products.updateProduct(productId, productoActualizado);
 
-  if (productoActualizadoIndex !== -1) {
-      products[productoActualizadoIndex]= {
-    
-    // products[productoActualizadoIndex].id = id;
-    // products[productoActualizadoIndex].title = title;
-    // products[productoActualizadoIndex].description = description;
-    // products[productoActualizadoIndex].price = price;
-    // products[productoActualizadoIndex].img = img;
-    // products[productoActualizadoIndex].code = code;
-    // products[productoActualizadoIndex].stock = stock;
-    
-    //metodo reduce es una forma mas elegante de hacerlo
-    id: parseInt(pid),
-      title,
-      description,
-      price,
-      img,
-      code,
-      stock, }
-  
-    console.log(products);
-    res.status(200).json({
-      status: "succes",
-      data: products[productoActualizadoIndex],
-    });
-  } else {
-    res.status(404).json({
-      msg: "El producto no que intenta actualizar no existe",
-    });
+    res.json({ message: "Producto Actualizado Exitosamente" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error al actualizar el producto" });
   }
 });
-// eliminar un producto por su ID
-router.delete("/:pid", (req, res) => {
-  const index = products.indexOf(
-    products.filter((e) => e.pid == req.params.pid)[0]
-  );
-  if (index > -1) {
-    products.splice(index, 1);
 
-    console.log(products);
-    res.json({ status: "success", msg: "Producto Eliminado correctamente" });
-  } else {
-    res.status(404).json({
-      msg: "Error al intentar eliminar el producto",
-    });
-    console.log(products);
+
+  //Eliminar un producto por ID
+router.delete('/:pid', async (req, res) => {
+  try {
+    const productId = parseInt(req.params.pid);
+    await products.deletproduct(productId);
+
+    res.json({ message: 'Producto eliminado exitosamente' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error al eliminar el producto' });
   }
 });
+
 
 module.exports = router;

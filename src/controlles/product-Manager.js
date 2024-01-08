@@ -3,18 +3,38 @@ const { default: test } = require("node:test");
 const fs = require("fs").promises;
 
 class ProductManager {
-  static ultId = 0;
+  // static ultId = 0;
 
   // creamos el constructor con array vacio
   constructor(path) {
     this.products = [];
     this.path = path;
+    this.loadProducts();
+  }
+
+  async loadProducts() {
+    try {
+      const data = await fs.readFile(this.path, "utf-8");
+      this.products = JSON.parse(data);
+    } catch (error) {
+      console.error("Error al cargar productos:", error.message);
+    }
   }
 
   async addProduct(nuevoObjeto) {
-    let { title, description, price, img, code, stock } = nuevoObjeto;
+    let { title, description, price, img, code, stock, status, category } =
+      nuevoObjeto;
     // validamos cada campo
-    if (!title || !description || !price || !img || !code || !stock) {
+    if (
+      !title ||
+      !description ||
+      !price ||
+      !img ||
+      !code ||
+      !stock ||
+      !status ||
+      !category
+    ) {
       console.log("Todos los campos son obligatorios");
       return;
     }
@@ -27,18 +47,48 @@ class ProductManager {
     // aqui creamos el nuevo objeto con todos los datos que me piden
 
     const newProduct = {
-      pid: ++ProductManager.ultId,
+      pid: this.getNextProductId(),
       title,
       description,
       price,
       img,
       code,
       stock,
+      status,
+      category,
     };
 
+    // agregamos al array de productos
+
     this.products.push(newProduct);
+    // Guardamos el archivo con todos los productos
     await this.guardarArchivo(this.products);
   }
+
+  getNextProductId() {
+    const maxPid = this.products.reduce(
+      (max, product) => (product.pid > max ? product.pid : max),
+      0
+    );
+    return maxPid + 1;
+  }
+  // guardamos un producto
+  // async guardarArchivo(arrayProductos) {
+  //   try {
+  //     await fs.writeFile(this.path, JSON.stringify(arrayProductos, null, 2));
+  //   } catch (error) {
+  //     console.log("error al guardar el archivo", error);
+  //   }
+  // }
+  async guardarArchivo() {
+    try {
+      await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));
+    } catch (error) {
+      console.error("Error al guardar el archivo:", error.message);
+      throw error;
+    }
+  }
+
   getProducts() {
     console.log(this.products);
   }
@@ -72,20 +122,11 @@ class ProductManager {
     }
   }
 
-  // guardamos un producto
-  async guardarArchivo(arrayProductos) {
-    try {
-      await fs.writeFile(this.path, JSON.stringify(arrayProductos, null, 2));
-    } catch (error) {
-      console.log("error al guardar el archivo", error);
-    }
-  }
-
   // para actalizar productos
   async updateProduct(pid, productAtualizado) {
     try {
       const arrayProductos = await this.leerArchivo();
-      const index = arrayProductos.findIndex((p) => p.pid === pid);
+      const index = arrayProductos.findIndex((item) => item.pid === pid);
 
       if (index !== -1) {
         arrayProductos.splice(index, 1, productAtualizado);
