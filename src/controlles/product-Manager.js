@@ -1,5 +1,3 @@
-const { default: test } = require("node:test");
-
 const fs = require("fs").promises;
 
 class ProductManager {
@@ -22,14 +20,22 @@ class ProductManager {
   }
 
   async addProduct(nuevoObjeto) {
-    let { title, description, price, img, code, stock, status, category } =
-      nuevoObjeto;
+    let {
+      title,
+      description,
+      price,
+      thumbnail = [],
+      code,
+      stock,
+      status = true,
+      category,
+    } = nuevoObjeto;
     // validamos cada campo
     if (
       !title ||
       !description ||
       !price ||
-      !img ||
+      !thumbnail ||
       !code ||
       !stock ||
       !status ||
@@ -47,11 +53,11 @@ class ProductManager {
     // aqui creamos el nuevo objeto con todos los datos que me piden
 
     const newProduct = {
-      pid: this.getNextProductId(),
+      id: this.getNextProductId(),
       title,
       description,
       price,
-      img,
+      thumbnail,
       code,
       stock,
       status,
@@ -66,42 +72,28 @@ class ProductManager {
   }
 
   getNextProductId() {
-    const maxPid = this.products.reduce(
-      (max, product) => (product.pid > max ? product.pid : max),
+    const maxId = this.products.reduce(
+      (max, product) => (product.id > max ? product.id : max),
       0
     );
-    return maxPid + 1;
-  }
-  // guardamos un producto
-  // async guardarArchivo(arrayProductos) {
-  //   try {
-  //     await fs.writeFile(this.path, JSON.stringify(arrayProductos, null, 2));
-  //   } catch (error) {
-  //     console.log("error al guardar el archivo", error);
-  //   }
-  // }
-  async guardarArchivo() {
-    try {
-      await fs.writeFile(this.path, JSON.stringify(this.products, null, 2));
-    } catch (error) {
-      console.error("Error al guardar el archivo:", error.message);
-      throw error;
-    }
+    return maxId + 1;
   }
 
   getProducts() {
     console.log(this.products);
   }
 
-  async getProductById(pid) {
+  
+  async getProductById(id) {
     try {
       const arrayProductos = await this.leerArchivo();
       const productoBuscado = arrayProductos.find(
-        (producto) => producto.pid === pid
+        (producto) => producto.id === id
       );
 
       if (!productoBuscado) {
         console.log("No se encontro el producto");
+        return null;
       } else {
         console.log("producto encontrado ");
         return productoBuscado;
@@ -122,11 +114,20 @@ class ProductManager {
     }
   }
 
+  async guardarArchivo(arrayProductos) {
+    try {
+      await fs.writeFile(this.path, JSON.stringify(arrayProductos, null, 2));
+    } catch (error) {
+      console.error("Error al guardar el archivo:", error.message);
+      throw error;
+    }
+  }
+
   // para actalizar productos
-  async updateProduct(pid, productAtualizado) {
+  async updateProduct(id, productAtualizado) {
     try {
       const arrayProductos = await this.leerArchivo();
-      const index = arrayProductos.findIndex((item) => item.pid === pid);
+      const index = arrayProductos.findIndex((item) => item.id === id);
 
       if (index !== -1) {
         arrayProductos.splice(index, 1, productAtualizado);
@@ -139,10 +140,10 @@ class ProductManager {
     }
   }
 
-  async deletproduct(pid, productAtualizado) {
+  async deletproduct(id) {
     try {
       const arrayProductos = await this.leerArchivo();
-      const index = arrayProductos.findIndex((p) => p.pid === pid);
+      const index = arrayProductos.findIndex((p) => p.id === id);
 
       if (index !== -1) {
         arrayProductos.splice(index, 1);
@@ -155,21 +156,15 @@ class ProductManager {
     }
   }
 
-  async deletAllProducts(pid, productAtualizado) {
-    try {
-      const arrayProductos = await this.leerArchivo();
-      const index = arrayProductos.findIndex((p) => p.pid === pid);
-
-      if (index !== -1) {
-        arrayProductos.splice(index);
-        await this.guardarArchivo(arrayProductos);
-      } else {
-        console.log("no se encontro el elemento a borrar");
-      }
-    } catch (error) {
-      console.log("error al borrar el producto", error);
-    }
-  }
+  // async deleteProduct(id) {
+  //   try {
+  //     const arrayProductos = await this.leerArchivo();
+  //     const newArray = arrayProductos.filter((item) => item.id !== id);
+  //     await this.guardarArchivo(newArray);
+  //   } catch (error) {
+  //     console.log('Error al borrar el Producto', error);
+  //   }
+  // }
 
   async getProductsLimit(limit) {
     const arrayProductos = await this.leerArchivo();
@@ -181,3 +176,13 @@ class ProductManager {
 }
 
 module.exports = ProductManager;
+
+// {
+//   "id": 1,
+//   "title": "Jamon",
+//   "description": "Cocido",
+//   "price": 700,
+//   "thumbnail": "sin imagen para mostrar",
+//   "code": "abc123",
+//   "stock": "30"
+// },

@@ -3,6 +3,8 @@ const router = express.Router();
 const ProductManager = require("../controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
 
+
+// Metodo GET - Obtener productos con límite
 router.get("/", async (req, res) => {
   try {
     const arrayProductos = await products.leerArchivo();
@@ -22,21 +24,21 @@ router.get("/", async (req, res) => {
 });
 
 // .................................................................
-
+//Metodo GET - Obtener un producto por ID
 router.get("/:pid", async (req, res) => {
   try {
-    let pid = parseInt(req.params.pid);
+    const pid = parseInt(req.params.pid);
 
     const buscar = await products.getProductById(pid);
 
     if (buscar) {
-      return res.send(buscar);
+      res.json({ product: buscar });
     } else {
-      return res.send("ID de producto incorrecto, intente de nuevo");
+      res.status(404).json({ error: 'Producto no encontrado' });
     }
   } catch (error) {
-    console.log(error);
-    res.send("error al cargar");
+    console.error('Error al obtener producto por ID:', error);
+    res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
 
