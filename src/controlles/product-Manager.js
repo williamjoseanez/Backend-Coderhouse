@@ -156,15 +156,6 @@ class ProductManager {
     }
   }
 
-  // async deleteProduct(id) {
-  //   try {
-  //     const arrayProductos = await this.leerArchivo();
-  //     const newArray = arrayProductos.filter((item) => item.id !== id);
-  //     await this.guardarArchivo(newArray);
-  //   } catch (error) {
-  //     console.log('Error al borrar el Producto', error);
-  //   }
-  // }
 
   async getProductsLimit(limit) {
     const arrayProductos = await this.leerArchivo();
@@ -176,13 +167,3 @@ class ProductManager {
 }
 
 module.exports = ProductManager;
-
-// {
-//   "id": 1,
-//   "title": "Jamon",
-//   "description": "Cocido",
-//   "price": 700,
-//   "thumbnail": "sin imagen para mostrar",
-//   "code": "abc123",
-//   "stock": "30"
-// },

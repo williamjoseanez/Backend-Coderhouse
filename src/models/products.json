@@ -127,11 +127,11 @@
   },
   {
     "id": 15,
-    "title": "camarones",
+    "title": "redbull 145555",
     "description": "Naranja 1L",
     "price": 950,
-    "img": "sin imagen para mostrar",
-    "code": "abc136",
+    "thumbnail": [],
+    "code": "abc14545",
     "stock": "40",
     "status": true,
     "category": "licores"
