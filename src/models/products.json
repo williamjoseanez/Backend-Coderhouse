@@ -4,7 +4,7 @@
     "title": "Jamon",
     "description": "Cocido",
     "price": 700,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699447450/medallones_de_pollo_fvrhhe.png",
     "code": "abc123",
     "stock": "30"
   },
@@ -13,7 +13,7 @@
     "title": "Punta de Agua",
     "description": "Cremoso",
     "price": 3200,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699446980/pata_muslo_wl6hdk.png",
     "code": "abc124",
     "stock": "40"
   },
@@ -22,7 +22,7 @@
     "title": "Manaos",
     "description": "Cola",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399302/maple_dkozju.png",
     "code": "abc125",
     "stock": "40"
   },
@@ -31,7 +31,7 @@
     "title": "Manaos",
     "description": "lima",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399302/promo_6_r9o6iq.png",
     "code": "abc126",
     "stock": "40"
   },
@@ -40,7 +40,7 @@
     "title": "Manaos",
     "description": "naranja",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399301/promo_5_hpvg1b.png",
     "code": "abc127",
     "stock": "40"
   },
@@ -49,7 +49,7 @@
     "title": "Manaos",
     "description": "tonica",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399301/promo_4_ybttre.png",
     "code": "abc128",
     "stock": "40"
   },
@@ -58,7 +58,7 @@
     "title": "Manaos",
     "description": "guarana",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399301/promo_3_bctdxs.png",
     "code": "abc129",
     "stock": "40"
   },
@@ -67,7 +67,7 @@
     "title": "Manaos",
     "description": "cola zero",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399301/promo_2_zzhdsm.png",
     "code": "abc130",
     "stock": "40"
   },
@@ -76,7 +76,7 @@
     "title": "Manaos",
     "description": "agua sin gas",
     "price": 400,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399301/promo_1_pp656g.png",
     "code": "abc131",
     "stock": "40"
   },
@@ -85,7 +85,7 @@
     "title": "Manaos",
     "description": "agua con gas",
     "price": 500,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/milanesa_de_polllo_ugd6oq.png",
     "code": "abc132",
     "stock": "40"
   },
@@ -94,7 +94,7 @@
     "title": "coca cola",
     "description": "retornable 2l",
     "price": 1100,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/promo_7_xwtotg.png",
     "code": "abc133",
     "stock": "40"
   },
@@ -103,7 +103,7 @@
     "title": "Fanta",
     "description": "Cdescartable 2.25ml",
     "price": 1600,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/promo_8_hrrbq1.png",
     "code": "abc134",
     "stock": "40"
   },
@@ -112,7 +112,7 @@
     "title": "7up",
     "description": "ColaDescartable 2.25ml",
     "price": 1450,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/especial_1_hfx4ax.png",
     "code": "abc135",
     "stock": "40"
   },
@@ -121,7 +121,7 @@
     "title": "Cepita",
     "description": "Naranja 1L",
     "price": 950,
-    "thumbnail": "sin imagen para mostrar",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1697503732/typeScript_idmrmw.jpg",
     "code": "abc136",
     "stock": "40"
   },
@@ -130,7 +130,7 @@
     "title": "redbull 145555",
     "description": "Naranja 1L",
     "price": 950,
-    "thumbnail": [],
+    "thumbnail":"https://res.cloudinary.com/dheurnsr0/image/upload/v1697503732/github_h8cpll.jpg",
     "code": "abc14545",
     "stock": "40",
     "status": true,

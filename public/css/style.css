@@ -1,3 +1,7 @@
+body {
+  background-color: aqua;
+}
+
 h1 {
   color: rgb(28, 28, 228);
   background-color: rgb(3, 3, 3);
@@ -5,6 +9,9 @@ h1 {
   border-radius: 5%;
 }
 
+p {
+  color: crimson;
+}
 .container {
   display: flex;
   justify-content: center;
@@ -14,4 +21,39 @@ h1 {
 .container img {
   width: 250px;
   border-radius: 30%;
+}
+
+/* Estilos base para la tarjeta */
+.card {
+  width: 100%;
+  max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
+  margin: 20px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s;
+}
+
+/* Estilo para la imagen de la tarjeta */
+.card img {
+  width: 100%;
+  height: auto;
+}
+
+/* Estilos para el contenido de la tarjeta */
+.card-body {
+  padding: 15px;
+}
+
+/* Estilos adicionales al pasar el mouse sobre la tarjeta (opcional) */
+.card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Media query para hacer la tarjeta responsive */
+@media (max-width: 768px) {
+  .card {
+    max-width: 100%;
+  }
 }
