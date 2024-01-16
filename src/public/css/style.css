@@ -1,16 +1,17 @@
 body {
-  background-color: aqua;
+  background-color: rgb(228, 216, 216);
 }
 
 h1 {
-  color: rgb(28, 28, 228);
+  color: rgb(185, 185, 219);
   background-color: rgb(3, 3, 3);
   text-align: center;
   border-radius: 5%;
 }
 
 p {
-  color: crimson;
+  align-items: center;
+  color: rgb(19, 18, 18);
 }
 .container {
   display: flex;
@@ -19,30 +20,28 @@ p {
 }
 
 .container img {
-  width: 250px;
+  width: 200px;
   border-radius: 30%;
 }
 
 /* Estilos base para la tarjeta */
 .card {
-  width: 100%;
-  max-width: 300px; /* Ajusta el ancho máximo según tus necesidades */
-  margin: 20px;
-  border: 1px solid #ddd;
+  display: inline-block;
+  font-family: Arial, sans-serif;
+  padding: 1em;
+  max-width: 250px; /* Ajusta el ancho máximo según tus necesidades */
+  margin: 20px 20px 20px 50px;
+  border: 1px solid #161515;
   border-radius: 8px;
   overflow: hidden;
   transition: transform 0.3s;
+  box-sizing: border-box; /* Asegura que el ancho incluya el padding y el borde */
 }
 
 /* Estilo para la imagen de la tarjeta */
 .card img {
   width: 100%;
   height: auto;
-}
-
-/* Estilos para el contenido de la tarjeta */
-.card-body {
-  padding: 15px;
 }
 
 /* Estilos adicionales al pasar el mouse sobre la tarjeta (opcional) */
@@ -53,7 +52,11 @@ p {
 
 /* Media query para hacer la tarjeta responsive */
 @media (max-width: 768px) {
+  .container {
+    flex-direction: column; /* Cambia a una disposición de columna en pantallas más pequeñas */
+  }
+
   .card {
-    max-width: 100%;
+    flex: 100%; /* Hace que las tarjetas ocupen el 100% del ancho en pantallas pequeñas */
   }
 }
