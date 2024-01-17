@@ -30,7 +30,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // routing
-app.use("/home", viewsRouter);
+app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
 
@@ -47,12 +47,10 @@ io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado");
 
   // Envía la lista de productos cuando un cliente se conecta
-  socket.emit("products", await products.getProducts());
-
-  socket.on("mensaje", (data) => {
-    console.log(data);
-    io.sockets.emit("mensaje", data);
-  });
+ 
+  const productList = await products.getProducts();
+  console.log("Product List:", productList);
+  socket.emit("products", productList);
 
   //Recibimos el evento "eliminarProducto"
   socket.on("eliminarProducto", async (id) => {
@@ -62,10 +60,7 @@ io.on("connection", async (socket) => {
 
   //Recibimos el evento "agregarProducto"
   socket.on("agregarProducto", async (product) => {
-    await ProductManager.addProduct(product);
+    await products.addProduct(product);
     io.sockets.emit("products", products.getProducts());
   });
-
-  // socket.emit("saludos", "ramonnnnn");
-  socket.emit("saludos", products);
 });

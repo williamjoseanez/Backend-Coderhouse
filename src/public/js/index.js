@@ -1,63 +1,64 @@
-// const ProductManager = require("./controlles/product-Manager");
-// const products = new ProductManager("./src/models/products.json");
-// const express = require("express");
-
 console.log("esta funcionando");
 
 const socket = io();
 
 socket.on("products", (data) => {
-  renderProductos(data);
+    //   renderProductos(data);
+    if (Array.isArray(data) && data.length > 0) {
+        renderProductos(data);
+      } else {
+        console.error('Received data is not a valid array:', data);
+      }
 });
 
 const renderProductos = (products) => {
-  const contenedorProductos = document.getProductById("contenedorProductos");
+  const contenedorProductos = document.getElementById("contenedorProductos");
   contenedorProductos.innerHTML = "";
 
-  products.forEach((item) => {
+  products.forEach((product) => {
     const card = document.createElement("div");
+
     card.classList.add("card");
     //Agregamos boton para eliminar:
+
     card.innerHTML = `
-                <p>Id ${item.id} </p>
-                <p>Titulo ${item.title} </p>
-                <p>Precio ${item.price} </p>
+                <img src="${product.thumbnail}" alt="Imagen de ${product.name}">
+                <p>Id ${product.id} </p>
+                <p>Titulo ${product.title}</p>
+                <p>Precio ${product.price}</p>
                 <button> Eliminar Producto </button>
         
         `;
+
     contenedorProductos.appendChild(card);
 
     card.querySelector("button").addEventListener("click", () => {
-      deletproduct(item.id);
+      eliminarProducto(product.id);
     });
   });
 };
 
-const deletproduct = (id) => {
+const eliminarProducto = (id) => {
   socket.emit("eliminarProducto", id);
 };
 
-document.getProductById("btnEnviar").addEventListener("click", () => {
-  addProduct();
+document.getElementById("btnEnviar").addEventListener("click", () => {
+ agregarProducto();
 });
 
-const addProduct = () => {
+const agregarProducto = () => {
   const product = {
-    title: document.getProductById("title").value,
-    description: document.getProductById("description").value,
-    price: document.getProductById("price").value,
-    thumbnail: document.getProductById("thumbnail").value,
-    code: document.getProductById("code").value,
-    stock: document.getProductById("stock").value,
-    category: document.getProductById("category").value,
-    status: document.getProductById("status").value === "true",
+    title: document.getElementById("title").value,
+    description: document.getElementById("description").value,
+    price: document.getElementById("price").value,
+    thumbnail: document.getElementById("thumbnail").value,
+    code: document.getElementById("code").value,
+    stock: document.getElementById("stock").value,
+    category: document.getElementById("category").value,
+    status: document.getElementById("status").value === "true",
   };
 
-  socket.emit("addProduct", product);
+  socket.emit("agregarProducto", product);
 
-  //   socket.emit("mensaje", "hola mundillo");
-
-  socket.on("saludos", (data) => {
-    console.log(data);
-  });
+ 
 };

@@ -79,11 +79,17 @@ class ProductManager {
     return maxId + 1;
   }
 
-  getProducts() {
-    console.log(this.products);
+  async getProducts() {
+    // console.log(this.products);
+    try {
+      const arrayProductos = await this.leerArchivo();
+      return arrayProductos;
+    } catch (error) {
+      console.log("Error al leer el archivo", error);
+      throw error;
+    }
   }
 
-  
   async getProductById(id) {
     try {
       const arrayProductos = await this.leerArchivo();
@@ -155,7 +161,6 @@ class ProductManager {
       console.log("error al borrar el producto", error);
     }
   }
-
 
   async getProductsLimit(limit) {
     const arrayProductos = await this.leerArchivo();
