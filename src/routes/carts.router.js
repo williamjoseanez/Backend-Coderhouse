@@ -18,7 +18,7 @@ router.get("/:cid", async (req, res) => {
 
   try {
     const cart = await cartManager.getCartById(cartId);
-    res, json(cart.products);
+    res.json(cart.products);
   } catch (error) {
     console.error("Error al querer obtener el Carrito", error);
     res.status(500).json({ error: "Error del Servidor" });
