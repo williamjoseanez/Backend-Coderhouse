@@ -60,3 +60,53 @@ p {
     flex: 100%; /* Hace que las tarjetas ocupen el 100% del ancho en pantallas pequeñas */
   }
 }
+
+/* formulario */
+
+.div-form {
+  display: flex;
+  justify-content: center;
+}
+form {
+  max-width: 300px;
+  width: 100%;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+form img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+input,
+select,
+button {
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  box-sizing: border-box;
+}
+
+.padding-button {
+  padding: 1rem;
+}
+
+.color-button {
+  background-color: #161515;
+}
+button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}

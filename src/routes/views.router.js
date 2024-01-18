@@ -17,24 +17,23 @@ router.get("/realtimeproducts", async (req, res) => {
 });
 
 // Metodo GET - Obtener productos
-  router.get("/home", async (req, res) => {
-    try {
-      const arrayProducts = await products.leerArchivo();
-  
-      let limit = parseInt(req.query.limit);
-  
-      if (limit) {
-        const arrayConLimite = arrayProducts.slice(0, limit);
-  
-        res.render("home", { products: arrayConLimite });
-      } else {
-        res.render("home", { products: arrayProducts });
-      }
-    } catch (error) {
-      console.log("error error error", error);
-      return res.status(500).send("error al cargar el archivo");
-    }
-  });
+router.get("/home", async (req, res) => {
+  try {
+    const arrayProducts = await products.leerArchivo();
 
+    let limit = parseInt(req.query.limit);
+
+    if (limit) {
+      const arrayConLimite = arrayProducts.slice(0, limit);
+
+      res.render("home", { products: arrayConLimite });
+    } else {
+      res.render("home", { products: arrayProducts });
+    }
+  } catch (error) {
+    console.log("error error error", error);
+    return res.status(500).send("error al cargar el archivo");
+  }
+});
 
 module.exports = router;

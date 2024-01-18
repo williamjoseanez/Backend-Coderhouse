@@ -3,12 +3,12 @@ console.log("esta funcionando");
 const socket = io();
 
 socket.on("products", (data) => {
-    //   renderProductos(data);
-    if (Array.isArray(data) && data.length > 0) {
-        renderProductos(data);
-      } else {
-        console.error('Received data is not a valid array:', data);
-      }
+  //   renderProductos(data);
+  if (Array.isArray(data) && data.length > 0) {
+    renderProductos(data);
+  } else {
+    console.error("Received data is not a valid array:", data);
+  }
 });
 
 const renderProductos = (products) => {
@@ -25,7 +25,7 @@ const renderProductos = (products) => {
                 <img src="${product.thumbnail}" alt="Imagen de ${product.name}">
                 <p>Id ${product.id} </p>
                 <p>Titulo ${product.title}</p>
-                <p>Precio ${product.price}</p>
+                <p>Precio $ ${product.price}</p>
                 <button> Eliminar Producto </button>
         
         `;
@@ -43,7 +43,7 @@ const eliminarProducto = (id) => {
 };
 
 document.getElementById("btnEnviar").addEventListener("click", () => {
- agregarProducto();
+  agregarProducto();
 });
 
 const agregarProducto = () => {
@@ -59,6 +59,4 @@ const agregarProducto = () => {
   };
 
   socket.emit("agregarProducto", product);
-
- 
 };
