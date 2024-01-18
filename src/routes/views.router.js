@@ -3,7 +3,6 @@ const router = express.Router();
 const ProductManager = require("../controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
 
-// Metodo GET - Obtener productos
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {

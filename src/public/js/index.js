@@ -1,9 +1,6 @@
-console.log("esta funcionando");
-
 const socket = io();
 
 socket.on("products", (data) => {
-  //   renderProductos(data);
   if (Array.isArray(data) && data.length > 0) {
     renderProductos(data);
   } else {
@@ -22,13 +19,11 @@ const renderProductos = (products) => {
     //Agregamos boton para eliminar:
 
     card.innerHTML = `
-                <img src="${product.thumbnail}" alt="Imagen de ${product.name}">
+                <img src="${product.thumbnail}" alt="Imagen de ${product.title}">
                 <p>Id ${product.id} </p>
-                <p>Titulo ${product.title}</p>
+                <p>Producto ${product.title}</p>
                 <p>Precio $ ${product.price}</p>
-                <button> Eliminar Producto </button>
-        
-        `;
+                <button> Eliminar Producto </button>`;
 
     contenedorProductos.appendChild(card);
 
