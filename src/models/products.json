@@ -9,15 +9,6 @@
     "stock": "30"
   },
   {
-    "id": 2,
-    "title": "Punta de Agua",
-    "description": "Cremoso",
-    "price": 3200,
-    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699446980/pata_muslo_wl6hdk.png",
-    "code": "abc124",
-    "stock": "40"
-  },
-  {
     "id": 3,
     "title": "Manaos",
     "description": "Cola",
@@ -124,5 +115,16 @@
     "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1697503732/typeScript_idmrmw.jpg",
     "code": "abc136",
     "stock": "40"
+  },
+  {
+    "id": 15,
+    "title": "crema",
+    "description": "lacteos",
+    "price": "100",
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1697503732/typeScript_idmrmw.jpg",
+    "code": "4688555",
+    "stock": "10",
+    "status": true,
+    "category": "sin detalles"
   }
 ]

@@ -1,5 +1,4 @@
-<h1>Real-Time Products</h1>
-
+{{!-- <h1>Bienvenidos al Real-Time Products</h1>
 
 <div id="contenedorProductos"></div>
 <h2 class="div-form">FORMULARIO PARA AGREGAR PRODUCTOS</h2>
@@ -25,4 +24,29 @@
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"
 ></script>
+<script src="js/index.js"></script> --}}
+<h1>Bienvenidos al Real-Time Products</h1>
+
+<div id="contenedorProductos"></div>
+<h2 class="div-form">FORMULARIO PARA AGREGAR PRODUCTOS</h2>
+
+<div class="div-form">
+  <form id="productForm">
+    <input type="text" id="title" placeholder="Titulo" required />
+    <input type="text" id="description" placeholder="Descripción" required />
+    <input type="number" id="price" placeholder="Precio" required />
+    <input type="text" id="thumbnail" value="Sin Imagen" />
+    <input type="text" id="code" placeholder="Código" required />
+    <input type="number" id="stock" placeholder="Stock" required />
+    <input type="text" id="category" placeholder="Categoria" required />
+    <select id="status">
+      <option value="true">Activo</option>
+      <option value="false">Inactivo</option>
+    </select>
+    <button type="button" id="btnEnviar">Enviar</button>
+  </form>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.1.2/socket.io.js"></script>
 <script src="js/index.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

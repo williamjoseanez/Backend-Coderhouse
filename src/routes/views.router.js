@@ -35,4 +35,8 @@ router.get("/home", async (req, res) => {
   }
 });
 
+router.get("/chat", (req, res) => {
+  res.render("chat");
+})
+
 module.exports = router;

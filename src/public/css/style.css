@@ -1,5 +1,7 @@
 body {
+  height: 100%;
   background-color: rgb(228, 216, 216);
+  background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
 }
 
 h1 {
@@ -11,7 +13,7 @@ h1 {
 
 p {
   align-items: center;
-  color: rgb(19, 18, 18);
+  color: rgb(253, 250, 250);
 }
 .container {
   display: flex;
@@ -27,6 +29,7 @@ p {
 /* Estilos base para la tarjeta */
 .card {
   display: inline-block;
+  background-color: rgb(1, 8, 8);
   font-family: Arial, sans-serif;
   padding: 1em;
   max-width: 250px; /* Ajusta el ancho máximo según tus necesidades */
@@ -66,6 +69,7 @@ p {
 .div-form {
   display: flex;
   justify-content: center;
+  color: #ffffff;
 }
 form {
   max-width: 300px;
@@ -84,8 +88,7 @@ form img {
 }
 
 input,
-select,
-button {
+select {
   width: 100%;
   margin-bottom: 10px;
   padding: 8px;
@@ -94,21 +97,31 @@ button {
 
 .padding-button {
   padding: 1rem;
+  display: grid;
+  place-items: center;
 }
 
 .color-button {
-  background-color: #161515;
+  background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
+  height: 10vh;
+}
+div button {
+  background-color: #1c1e22;
 }
 
-
 button {
-  background-color: #4caf50;
+  justify-content: center;
   color: white;
   border: none;
+  background-color: #4caf50;
+  width: 100%;
+  margin-bottom: 10px;
+  padding: 8px;
+  box-sizing: border-box;
   border-radius: 4px;
   cursor: pointer;
 }
 
 button:hover {
-  background-color: #45a049;
+  background-color: #2964d3;
 }
