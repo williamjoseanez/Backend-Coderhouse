@@ -34,8 +34,9 @@ const renderProductos = (products) => {
   });
 };
 
-const confirmarEliminarProducto = (id) => {
-  // Mostrar SweetAlert para confirmar la eliminación
+
+const eliminarProducto =  (id) => {
+
   Swal.fire({
     title: "¿Estás seguro?",
     text: "Esta acción no se puede deshacer",
@@ -48,14 +49,13 @@ const confirmarEliminarProducto = (id) => {
   }).then((result) => {
     if (result.isConfirmed) {
       // Si se confirma, eliminar el producto
-      eliminarProducto(id);
+      socket.emit("eliminarProducto", id);
     }
   });
-};
 
-const eliminarProducto = async (id) => {
+
   // console.log('Eliminando producto con id:', id);
-  await socket.emit("eliminarProducto", id);
+  
 };
 
 socket.on("eliminarProducto", (id) => {
