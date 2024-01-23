@@ -7,47 +7,50 @@ const path = require("path");
 const socket = require("socket.io");
 const ProductManager = require("./controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
+
 // motor de plantilla handlebars
 const exphbs = require("express-handlebars");
 
-// creamos puerto
+// creo  puerto
 const PUERTO = 8080;
 
-// Aquí agregamos la línea para inicializar 'messages'
+// Aquí agrego la línea para inicializar 'messages', del chat box
 const messages = [];
+
 // creamos app
 
 const app = express();
 
-// configuramos en moto de plantillas handlebars
+// configuro en moto de plantillas handlebars
 app.engine("handlebars", exphbs.engine());
 
 app.set("view engine", "handlebars");
-// definimos el directorio donde se encuentran las vistas
+
+// defino el directorio donde se encuentran las vistas
 app.set("views", "./src/views");
 
-// creamos ruta
+// creo ruta de handlebars
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routing
+// routing desde routes
 app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
 
-// ponemos a escuchar al segvidor
+// pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchado http://localhost:${PUERTO}`);
 });
 
 const io = socket(httpServer);
 
-// configuramos los eventos de socket.io (conection)
+// configuro los eventos de socket.io (conection)
 
 io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado");
-  // Envía la lista de productos cuando un cliente se conecta
+  // Envío la lista de productos cuando un cliente se conecta
 
   const productList = await products.getProducts();
   // console.log("Product List:", productList);
@@ -63,16 +66,16 @@ io.on("connection", async (socket) => {
   socket.on("message", (data) => {
     messages.push(data);
     io.emit("messagesLogs", messages);
-    //Con emit emitimos eventos desde el servidor al cliente.
+    //Con emit emito eventos desde el servidor al cliente.
   });
 
-  //Recibimos el evento "eliminarProducto"
+  //Recibo el evento "eliminarProducto"
   socket.on("eliminarProducto", async (id) => {
     await products.deletproduct(id);
     io.sockets.emit("products", products.getProducts());
   });
 
-  //Recibimos el evento "agregarProducto"
+  //Recibo el evento "agregarProducto"
   socket.on("agregarProducto", async (product) => {
     await products.addProduct(product);
     io.sockets.emit("products", products.getProducts());

@@ -48,7 +48,7 @@ const eliminarProducto =  (id) => {
     cancelButtonText: "Cancelar",
   }).then((result) => {
     if (result.isConfirmed) {
-      // Si se confirma, eliminar el producto
+      // Si se confirma, elimino el producto
       socket.emit("eliminarProducto", id);
     }
   });
@@ -59,15 +59,15 @@ const eliminarProducto =  (id) => {
 };
 
 socket.on("eliminarProducto", (id) => {
-  // Aquí eliminas el producto del lado del cliente
+  // Aquí elimino el producto del lado del cliente
   const remainingProducts = products.filter((product) => product.id !== id);
   renderProductos(remainingProducts);
 });
 
-/////////////////////////////desde aqui esta el codigo para el formulario//////////////
+/////////////////////////////Desde aqui esta el codigo para el formulario//////////////
 
 document.getElementById("btnEnviar").addEventListener("click", () => {
-  // Obtener los valores de los campos
+  // Obtengo los valores de los campos
   let title = document.getElementById("title").value;
   let description = document.getElementById("description").value;
   let thumbnail = document.getElementById("thumbnail").value;
@@ -76,7 +76,7 @@ document.getElementById("btnEnviar").addEventListener("click", () => {
   let stock = document.getElementById("stock").value;
   let category = document.getElementById("category").value;
 
-  // Verificamos si los campos requeridos están vacíos
+  // Verifico si los campos requeridos están vacíos
   if (
     title === "" ||
     description === "" ||
@@ -90,7 +90,7 @@ document.getElementById("btnEnviar").addEventListener("click", () => {
       "Todos los campos marcados como obligatorios (*) deben ser completados."
     );
   } else {
-    // Validaciones adicionales (puedes agregar más según tus necesidades)
+    // Validaciones adicionales (agrego más según mis necesidades)
     if (isNaN(Number(price)) || isNaN(Number(stock))) {
       alert("El precio y el stock deben ser números válidos.");
       return; // Detiene la ejecución si hay errores de validación
@@ -99,7 +99,7 @@ document.getElementById("btnEnviar").addEventListener("click", () => {
     // Aquí llamo a mi función para agregar el producto
     agregarProducto();
 
-    // Mostrar mensaje de éxito con SweetAlert
+    // Muestro mensaje de éxito con SweetAlert
     Swal.fire({
       position: "center",
       icon: "success",
@@ -125,7 +125,7 @@ const agregarProducto = () => {
 
   socket.emit("agregarProducto", product);
 
-  // Después de enviar el producto, limpiar los campos del formulario
+  // Después de enviar el producto, limpio los campos del formulario
   document.getElementById("title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("price").value = "";
