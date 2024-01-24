@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const ProductManager = require("../controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
-
+const productsModel = require("../models/products.model");
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
@@ -37,6 +37,27 @@ router.get("/home", async (req, res) => {
 
 router.get("/chat", (req, res) => {
   res.render("chat");
+});
+
+router.get("/products", async (req, res) => {
+  try {
+    const products = await productsModel.find();
+    res.json(products);
+  } catch (error) {
+    res.status(500).json({ message: "error al cargar, error" });
+  }
+});
+
+router.post("/products", async (req, res) => {
+  try {
+    const products = new productsModel(req.body);
+    await products.save();
+    res.send({ resultado: "success", products: products})
+  } catch (error) {
+    res.status(500).json({ message: "error al cargar, error" });
+  }
 })
+
+
 
 module.exports = router;

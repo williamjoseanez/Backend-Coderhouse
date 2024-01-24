@@ -1,12 +1,21 @@
 [
   {
     "id": 1,
-    "title": "Jamon",
-    "description": "Cocido",
-    "price": 700,
-    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699447450/medallones_de_pollo_fvrhhe.png",
-    "code": "abc123",
-    "stock": "30"
+    "title": "Manaos",
+    "description": "Cola",
+    "price": 950,
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399302/maple_dkozju.png",
+    "code": "abc125",
+    "stock": "40"
+  },
+  {
+    "id": 2,
+    "title": "Manaos",
+    "description": "Cola",
+    "price": 950,
+    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399302/maple_dkozju.png",
+    "code": "abc125",
+    "stock": "40"
   },
   {
     "id": 3,

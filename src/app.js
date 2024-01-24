@@ -7,6 +7,7 @@ const path = require("path");
 const socket = require("socket.io");
 const ProductManager = require("./controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
+const mongoose = require("mongoose");
 
 // motor de plantilla handlebars
 const exphbs = require("express-handlebars");
@@ -38,6 +39,13 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
+
+mongoose
+  .connect(
+    "mongodb+srv://williamjoseanez:William17735207@cluster0.fpryakl.mongodb.net/ecommerce?retryWrites=true&w=majority"
+  )
+  .then(() => console.log("conectado a la base de datos"))
+  .catch((error) => console.error(error));
 
 // pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
