@@ -22,6 +22,7 @@ const messages = [];
 
 const app = express();
 
+
 // configuro en moto de plantillas handlebars
 app.engine("handlebars", exphbs.engine());
 
