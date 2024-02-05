@@ -4,6 +4,10 @@ const ProductManager = require("../controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
 const productsModel = require("../models/products.model");
 const mongoose = require("mongoose");
+const ImagenModel = require("../models/image.models");
+const path = require("path");
+
+const fs = require("fs").promises;
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
@@ -35,9 +39,52 @@ router.get("/home", async (req, res) => {
     return res.status(500).send("error al cargar el archivo");
   }
 });
-
+// chat
 router.get("/chat", (req, res) => {
   res.render("chat");
+});
+
+// multer, fomulario de imagnes
+router.get("/multer", (req, res) => {
+  res.render("multer");
+});
+
+router.get("/upload", async (req, res) => {
+  const imagenes = await ImagenModel.find();
+  const newArrayImagenes = imagenes.map((imagen) => {
+    return {
+      id: imagen._id,
+      title: imagen.title,
+      description: imagen.description,
+      filename: imagen.filename,
+      path: imagen.path,
+    };
+  });
+
+  res.render("upload", { imagenes: newArrayImagenes });
+});
+
+// POST - Agregar un nuevo producto
+router.post("/upload", async (req, res) => {
+  const imagen = new ImagenModel();
+  imagen.title = req.body.title;
+  imagen.description = req.body.description;
+  imagen.filename = req.file.filename;
+  imagen.path = "/uploads/" + req.file.filename; //carpeta donde se guardan las imagenes
+
+  // para guaradr en la base de datos
+  await imagen.save();
+  // redireccionar a home con mensaje de exito
+  res.redirect("upload");
+});
+
+// delet imagen rutinng
+
+router.get("/image/:id/delete", async (req, res) => {
+  const { id } = req.params;
+  const imagen = await ImagenModel.findByIdAndDelete(id);
+  await fs.unlink(path.resolve("./src/public" + imagen.path));
+  res.redirect("/upload");
 });
 
 // Ruta para mostrar productos en card en products//
@@ -65,16 +112,6 @@ router.post("/products", async (req, res) => {
   }
 });
 
-// router.delete("/products/:id", async (req, res) => {
-//   try {
-//     const productId = mongoose.Types.ObjectId(req.params.id); // Convertir a ObjectId
-//     await productsModel.findByIdAndDelete(productId);
 
-//     res.json({ message: "Producto eliminado exitosamente" });
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ message: "Error al eliminar el producto" });
-//   }
-// });
 
 module.exports = router;

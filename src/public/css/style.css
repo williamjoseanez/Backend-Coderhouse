@@ -1,7 +1,12 @@
 body {
+  margin: 0;
+  padding: 0;
   height: 100%;
   background-color: rgb(228, 216, 216);
   background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
+  /* background-repeat: no-repeat; */
+  background-size: cover;
+  background-attachment: fixed;
 }
 
 h1 {
@@ -124,4 +129,109 @@ button {
 
 button:hover {
   background-color: #2964d3;
+}
+
+/* Upload */
+
+.upload {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40vw;
+}
+
+.uploadContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  border-radius: 6px;
+  background-color: rgb(85, 104, 104);
+}
+
+.upload input {
+  padding: 10px;
+  font-size: 1em;
+  border: none;
+  border-radius: 6px;
+}
+
+.upload button {
+  background-color: #183977;
+  color: white;
+  cursor: pointer;
+}
+
+.upload button:hover {
+  background-color: #010a01;
+}
+
+/* header */
+/* Estilos del encabezado */
+header {
+  background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
+  color: #fff;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.logo img {
+  max-width: 50px;
+  height: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+}
+
+nav ul li {
+  margin-right: 20px;
+}
+
+nav a {
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+nav a:hover {
+  color: #695d30; /* Cambia el color al pasar el ratón sobre el enlace */
+}
+
+/* Estilos para dispositivos móviles */
+@media only screen and (max-width: 768px) {
+  nav {
+    display: none; /* Oculta la barra de navegación en pantallas más pequeñas */
+    flex-direction: column;
+    position: absolute;
+    top: 70px;
+    left: 0;
+    width: 100%;
+    background-color: #333;
+  }
+
+  nav.show {
+    display: flex; /* Muestra la barra de navegación cuando se hace clic en el icono del menú */
+  }
+
+  nav ul {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  nav ul li {
+    margin: 10px 0;
+  }
+
+  /* Icono del menú desplegable */
+  header:before {
+    content: "\2630"; /* Código del carácter Unicode para el icono del menú */
+    font-size: 25px;
+    cursor: pointer;
+    display: none;
+  }
 }

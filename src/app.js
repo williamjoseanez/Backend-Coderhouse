@@ -8,6 +8,9 @@ const socket = require("socket.io");
 const ProductManager = require("./controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
 const mongoose = require("mongoose");
+const multer = require("multer");
+
+require("../src/database.js");
 
 // motor de plantilla handlebars
 const exphbs = require("express-handlebars");
@@ -22,7 +25,6 @@ const messages = [];
 
 const app = express();
 
-
 // configuro en moto de plantillas handlebars
 app.engine("handlebars", exphbs.engine());
 
@@ -31,22 +33,28 @@ app.set("view engine", "handlebars");
 // defino el directorio donde se encuentran las vistas
 app.set("views", "./src/views");
 
-// creo ruta de handlebars
+// creo midlewares
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// routing desde routes
+// configuramos multer
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "./src/public/uploads");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
+
+app.use(multer({ storage }).single("image"));
+
+// routing desde routes handlebars
 app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
 
-mongoose
-  .connect(
-    "mongodb+srv://williamjoseanez:William17735207@cluster0.fpryakl.mongodb.net/ecommerce?retryWrites=true&w=majority"
-  )
-  .then(() => console.log("conectado a la base de datos"))
-  .catch((error) => console.error(error));
 
 // pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
