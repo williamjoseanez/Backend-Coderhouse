@@ -9,6 +9,7 @@ const ProductManager = require("./controlles/product-Manager");
 const products = new ProductManager("./src/models/products.json");
 const mongoose = require("mongoose");
 const multer = require("multer");
+const MessageModel = require("./models/message.model.js");
 
 require("../src/database.js");
 
@@ -55,19 +56,29 @@ app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
 
-
 // pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchado http://localhost:${PUERTO}`);
 });
 
-const io = socket(httpServer);
+const io = new socket.Server(httpServer);
 
 // configuro los eventos de socket.io (conection)
 
 io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado");
   // Envío la lista de productos cuando un cliente se conecta
+
+  //Guardamos el Msj en Mongo DB
+  socket.on("message", async (data) => {
+    await MessageModel.create(data);
+
+    //Obtengo los msj Mongo DB y se los paso al cliente:
+    const messages = await MessageModel.find();
+    console.log(messages);
+
+    io.sockets.emit("message", messages);
+  });
 
   const productList = await products.getProducts();
   // console.log("Product List:", productList);
@@ -82,7 +93,7 @@ io.on("connection", async (socket) => {
   // chat-Box
   socket.on("message", (data) => {
     messages.push(data);
-    io.emit("messagesLogs", messages);
+    io.emit("message", messages);
     //Con emit emito eventos desde el servidor al cliente.
   });
 

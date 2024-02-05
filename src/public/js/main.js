@@ -28,19 +28,19 @@ Swal.fire({
 });
 
 chatBox.addEventListener("keyup", (event) => {
-if (event.key === "Enter") {
-  if (chatBox.value.trim().length > 0) {
-    //trim nos permite sacar los espacios en blanco del principio y del final de un string.
-    //Si el mensaje tiene más de 0 caracteres, lo enviamos al servidor.
-    socket.emit("message", { user: user, message: chatBox.value });
-    chatBox.value = "";
+  if (event.key === "Enter") {
+    if (chatBox.value.trim().length > 0) {
+      //trim nos permite sacar los espacios en blanco del principio y del final de un string.
+      //Si el mensaje tiene más de 0 caracteres, lo enviamos al servidor.
+      socket.emit("message", { user: user, message: chatBox.value });
+      chatBox.value = "";
+    }
   }
-}
 });
 
 //Listener de Mensajes:
 
-socket.on("messagesLogs", (data) => {
+socket.on("message", (data) => {
   let log = document.getElementById("messagesLogs");
   let messages = "";
 
