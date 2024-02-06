@@ -5,11 +5,11 @@ const cartsRouter = require("./routes/carts.router");
 const viewsRouter = require("./routes/views.router");
 const path = require("path");
 const socket = require("socket.io");
-const ProductManager = require("./controlles/product-Manager");
-const products = new ProductManager("./src/models/products.json");
+const ProductManager = require("./dao/controlles/product-Manager");
+const products = new ProductManager("./src/dao/models/products.json");
 const mongoose = require("mongoose");
 const multer = require("multer");
-const MessageModel = require("./models/message.model.js");
+const MessageModel = require("./dao/models/message.model.js");
 
 require("../src/database.js");
 

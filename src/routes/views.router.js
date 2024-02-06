@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../controlles/product-Manager");
-const products = new ProductManager("./src/models/products.json");
-const productsModel = require("../models/products.model");
+const ProductManager = require("../dao/controlles/product-Manager");
+const products = new ProductManager("./src/dao/models/products.json");
+const productsModel = require("../dao/models/products.model");
 const mongoose = require("mongoose");
-const ImagenModel = require("../models/image.models");
+const ImagenModel = require("../dao/models/image.models");
 const path = require("path");
 
 const fs = require("fs").promises;
@@ -111,7 +111,5 @@ router.post("/products", async (req, res) => {
     res.status(500).json({ message: "error al cargar, error" });
   }
 });
-
-
 
 module.exports = router;

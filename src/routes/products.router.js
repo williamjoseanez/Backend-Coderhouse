@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../controlles/product-Manager");
-const products = new ProductManager("./src/models/products.json");
+const ProductManager = require("../dao/controlles/product-Manager");
+const products = new ProductManager("./src/dao/models/products.json");
 
 
 // Metodo GET - Obtener productos con límite
