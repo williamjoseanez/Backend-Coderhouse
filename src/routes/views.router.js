@@ -1,10 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/controlles/product-Manager");
-const products = new ProductManager("./src/dao/models/products.json");
-const productsModel = require("../dao/models/products.model");
+const ProductManager = require("../dao/fyleSistem/controlles/product-Manager");
+const products = new ProductManager("./src/dao/fyleSistem/models/products.json");
+const productsModel = require("../dao/mongoDb/modelsDB/products.model");
 const mongoose = require("mongoose");
-const ImagenModel = require("../dao/models/image.models");
+const ImagenModel = require("../dao/mongoDb/modelsDB/image.models");
 const path = require("path");
 
 const fs = require("fs").promises;

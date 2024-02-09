@@ -3,43 +3,29 @@ const express = require("express");
 const productRouter = require("./routes/products.router");
 const cartsRouter = require("./routes/carts.router");
 const viewsRouter = require("./routes/views.router");
-const path = require("path");
 const socket = require("socket.io");
-const ProductManager = require("./dao/controlles/product-Manager");
-const products = new ProductManager("./src/dao/models/products.json");
-const mongoose = require("mongoose");
+const ProductManager = require("./dao/fyleSistem/controlles/product-Manager.js");
+const products = new ProductManager("./src/dao/fyleSistem/models/products.json");
 const multer = require("multer");
-const MessageModel = require("./dao/models/message.model.js");
-
+const MessageModel = require("./dao/mongoDb/modelsDB/message.model.js");
+const exphbs = require("express-handlebars"); // motor de plantilla handlebars
+const messages = []; // Aquí agrego la línea para inicializar 'messages', del chat box
+const PUERTO = 8080; // creo  puerto
 require("../src/database.js");
 
-// motor de plantilla handlebars
-const exphbs = require("express-handlebars");
-
-// creo  puerto
-const PUERTO = 8080;
-
-// Aquí agrego la línea para inicializar 'messages', del chat box
-const messages = [];
-
-// creamos app
-
-const app = express();
+const app = express(); // creamos app
 
 // configuro en moto de plantillas handlebars
 app.engine("handlebars", exphbs.engine());
-
 app.set("view engine", "handlebars");
-
-// defino el directorio donde se encuentran las vistas
-app.set("views", "./src/views");
+app.set("views", "./src/views"); // defino el directorio donde se encuentran las vistas
 
 // creo midlewares
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// configuramos multer
+// configuro multer
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./src/public/uploads");

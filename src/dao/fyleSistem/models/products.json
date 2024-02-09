@@ -106,14 +106,5 @@
     "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/promo_8_hrrbq1.png",
     "code": "abc134",
     "stock": "40"
-  },
-  {
-    "id": 13,
-    "title": "7up",
-    "description": "ColaDescartable 2.25ml",
-    "price": 1450,
-    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399300/especial_1_hfx4ax.png",
-    "code": "abc135",
-    "stock": "40"
   }
 ]

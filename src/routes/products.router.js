@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/controlles/product-Manager");
-const products = new ProductManager("./src/dao/models/products.json");
-
+const ProductManager = require("../dao/fyleSistem/controlles/product-Manager");
+const products = new ProductManager(
+  "./src/dao/fyleSistem/models/products.json"
+);
 
 // Metodo GET - Obtener productos con límite
 router.get("/", async (req, res) => {
@@ -34,11 +35,11 @@ router.get("/:pid", async (req, res) => {
     if (buscar) {
       res.json({ product: buscar });
     } else {
-      res.status(404).json({ error: 'Producto no encontrado' });
+      res.status(404).json({ error: "Producto no encontrado" });
     }
   } catch (error) {
-    console.error('Error al obtener producto por ID:', error);
-    res.status(500).json({ error: 'Error interno del servidor' });
+    console.error("Error al obtener producto por ID:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
@@ -68,19 +69,17 @@ router.put("/:pid", async (req, res) => {
   }
 });
 
-
-  //Eliminar un producto por ID
-router.delete('/:pid', async (req, res) => {
+//Eliminar un producto por ID
+router.delete("/:pid", async (req, res) => {
   try {
     const productId = parseInt(req.params.pid);
     await products.deletproduct(productId);
 
-    res.json({ message: 'Producto eliminado exitosamente' });
+    res.json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ message: 'Error al eliminar el producto' });
+    res.status(500).json({ message: "Error al eliminar el producto" });
   }
 });
-
 
 module.exports = router;
