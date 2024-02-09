@@ -55,7 +55,7 @@ io.on("connection", async (socket) => {
   console.log("Nuevo cliente conectado");
   // Envío la lista de productos cuando un cliente se conecta
 
-  //Guardamos el Msj en Mongo DB
+  //Guardo el Msj en Mongo DB
   socket.on("message", async (data) => {
     await MessageModel.create(data);
 
@@ -67,7 +67,6 @@ io.on("connection", async (socket) => {
   });
 
   const productList = await products.getProducts();
-  // console.log("Product List:", productList);
   if (Array.isArray(productList) && productList.length > 0) {
     socket.emit("products", productList);
   } else {

@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const ProductManager = require("../dao/fyleSistem/controlles/product-Manager");
-const products = new ProductManager("./src/dao/fyleSistem/models/products.json");
-const productsModel = require("../dao/mongoDb/modelsDB/products.model");
-const mongoose = require("mongoose");
+const products = new ProductManager(
+  "./src/dao/fyleSistem/models/products.json"
+);
 const ImagenModel = require("../dao/mongoDb/modelsDB/image.models");
 const path = require("path");
-
+const ProductModel = require("../dao/mongoDb/modelsDB/products.model");
 const fs = require("fs").promises;
 
 // Ruta para la vista en tiempo real
@@ -66,16 +66,22 @@ router.get("/upload", async (req, res) => {
 
 // POST - Agregar un nuevo producto
 router.post("/upload", async (req, res) => {
-  const imagen = new ImagenModel();
-  imagen.title = req.body.title;
-  imagen.description = req.body.description;
-  imagen.filename = req.file.filename;
-  imagen.path = "/uploads/" + req.file.filename; //carpeta donde se guardan las imagenes
+  try {
+    const imagen = new ImagenModel();
+    imagen.title = req.body.title;
+    imagen.description = req.body.description;
+    imagen.filename = req.file.filename;
+    imagen.path = "/uploads/" + req.file.filename; // Carpeta donde se guardan las imágenes
 
-  // para guaradr en la base de datos
-  await imagen.save();
-  // redireccionar a home con mensaje de exito
-  res.redirect("upload");
+    // Guardar la imagen en la base de datos
+    await imagen.save();
+
+    // Redireccionar a home con mensaje de éxito
+    res.redirect("upload");
+  } catch (error) {
+    console.error("Error al subir la imagen:", error);
+    res.status(500).send("Error al subir la imagen");
+  }
 });
 
 // delet imagen rutinng
@@ -87,28 +93,67 @@ router.get("/image/:id/delete", async (req, res) => {
   res.redirect("/upload");
 });
 
-// Ruta para mostrar productos en card en products//
+// // Ruta para mostrar productos en card en products//
+// router.get("/products", async (req, res) => {
+//   try {
+//     // uso el metodo.lean() porque me estaba dando un error al leer los datos que paso a handelbars
+//     // por algo llamado prototipo. la verdad tuve que invetigar porque no me funcionaba y me lanzaba un error
+
+//     const productsArray = await productsModel.find().lean();
+//     // console.log(productsArray);
+//     res.render("products", { products: productsArray });
+//   } catch (error) {
+//     res.status(500).json({ message: "Error al cargar, error" });
+//   }
+// });
+
+// Ruta para mostrar todos los productos con paginación
 router.get("/products", async (req, res) => {
   try {
-    // uso el metodo.lean() porque me estaba dando un error al leer los datos que paso a handelbars
-    // por algo llamado prototipo. la verdad tuve que invetigar porque no me funcionaba y me lanzaba un error
+    const { limit = 10, page = 1, category, minPrice, maxPrice } = req.query;
 
-    const productsArray = await productsModel.find().lean();
-    // console.log(productsArray);
-    res.render("products", { products: productsArray });
+    const options = {
+      limit: parseInt(limit),
+      skip: (parseInt(page) - 1) * parseInt(limit),
+    };
+
+    const filter = {};
+    if (category) {
+      filter.category = category;
+    }
+    if (minPrice && maxPrice) {
+      filter.price = { $gte: parseInt(minPrice), $lte: parseInt(maxPrice) };
+    }
+
+    const [products, categories] = await Promise.all([
+      ProductModel.find(filter, null, options).lean(),
+      ProductModel.distinct("category"),
+    ]);
+
+    const totalProducts = await ProductModel.countDocuments(filter);
+    const totalPages = Math.ceil(totalProducts / parseInt(limit));
+
+    res.render("products", {
+      products,
+      categories,
+      totalPages,
+      currentPage: parseInt(page),
+    });
   } catch (error) {
-    res.status(500).json({ message: "Error al cargar, error" });
+    console.error("Error al cargar los productos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 
 // metodo post que uso en products para agregar un producto nuevo
 router.post("/products", async (req, res) => {
   try {
-    const products = new productsModel(req.body);
-    await products.save();
-    res.send({ resultado: "success", products: products });
+    const newProduct = new ProductModel(req.body); // Creo un nuevo producto utilizando el modelo ProductModel
+    await newProduct.save(); // Guardo el nuevo producto en la base de datos
+    res.send({ resultado: "success", product: newProduct }); // Respondo con el nuevo producto creado
   } catch (error) {
-    res.status(500).json({ message: "error al cargar, error" });
+    console.error("Error al agregar un nuevo producto:", error);
+    res.status(500).json({ error: "Error al agregar un nuevo producto" }); // Respondo con un mensaje de error en caso de fallo
   }
 });
 

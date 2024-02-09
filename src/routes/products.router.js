@@ -6,21 +6,91 @@ const products = new ProductManager(
 );
 
 // Metodo GET - Obtener productos con límite
+// router.get("/", async (req, res) => {
+//   try {
+//     const arrayProductos = await products.leerArchivo();
+
+//     let limit = parseInt(req.query.limit);
+
+//     if (limit) {
+//       const arrayConLimite = arrayProductos.slice(0, limit);
+//       return res.send(arrayConLimite);
+//     } else {
+//       return res.send(arrayProductos);
+//     }
+//   } catch (error) {
+//     console.log("error error error", error);
+//     return res.status(500).send("error al cargar el archivo");
+//   }
+// });
+// Metodo GET - Obtener productos con límite, paginación y ordenamiento
 router.get("/", async (req, res) => {
   try {
-    const arrayProductos = await products.leerArchivo();
+    const { limit = 10, page = 1, sort, query } = req.query;
 
-    let limit = parseInt(req.query.limit);
+    // Obtengo todos los productos
+    let arrayProductos = await products.leerArchivo();
 
-    if (limit) {
-      const arrayConLimite = arrayProductos.slice(0, limit);
-      return res.send(arrayConLimite);
-    } else {
-      return res.send(arrayProductos);
+    // Aplico filtros si existen
+    if (query) {
+      //filtro por categoría
+      arrayProductos = arrayProductos.filter(
+        (producto) => producto.categoria === query
+      );
     }
+
+    // Aplico el  ordenamiento si está presente
+    if (sort) {
+      arrayProductos.sort((a, b) => {
+        if (sort === "asc") {
+          return a.precio - b.precio;
+        } else if (sort === "desc") {
+          return b.precio - a.precio;
+        } else {
+          return 0;
+        }
+      });
+    }
+
+    // Calculo el índice inicial y final para la paginación
+    const startIndex = (page - 1) * limit;
+    const endIndex = page * limit;
+
+    // Obtengo la página actual de productos
+    const arrayConPaginacion = arrayProductos.slice(startIndex, endIndex);
+
+    // Calculo el número total de páginas
+    const totalPages = Math.ceil(arrayProductos.length / limit);
+
+    // Creo objeto de respuesta con los productos paginados
+    const response = {
+      status: "success",
+      payload: arrayConPaginacion,
+      totalPages,
+      prevPage: page > 1 ? parseInt(page) - 1 : null,
+      nextPage: page < totalPages ? parseInt(page) + 1 : null,
+      page: parseInt(page),
+      hasPrevPage: page > 1,
+      hasNextPage: page < totalPages,
+      prevLink:
+        page > 1
+          ? `/api/products?limit=${limit}&page=${
+              parseInt(page) - 1
+            }&sort=${sort}&query=${query}`
+          : null,
+      nextLink:
+        page < totalPages
+          ? `/api/products?limit=${limit}&page=${
+              parseInt(page) + 1
+            }&sort=${sort}&query=${query}`
+          : null,
+    };
+
+    // Envio la respuesta
+    res.json(response);
   } catch (error) {
     console.log("error error error", error);
-    return res.status(500).send("error al cargar el archivo");
+    res.status(500).json({ error: "Error al cargar el archivo" });
   }
 });
 

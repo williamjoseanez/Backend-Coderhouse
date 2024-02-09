@@ -235,3 +235,69 @@ nav a:hover {
     display: none;
   }
 }
+
+/* aqui logica css para product.handlebars */
+
+.filter-section {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.filter-section .filter-label {
+  margin-right: 10px;
+  display: inline-block;
+  width: 100px; /* ajusta el ancho según sea necesario */
+}
+
+.filter-section select {
+  width: 250px;
+  padding: 5px;
+  border-radius: 5px;
+}
+
+.filter-section button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+  width: 250px;
+}
+
+.filter-section button:hover {
+  background-color: #0056b3;
+}
+
+.pagination-section {
+  margin-top: 20px;
+  text-align: center;
+  width: 100px;
+  display: flex;
+  align-items: center;
+}
+.pagination-section span {
+  color: #fff;
+  padding: 1rem;
+}
+
+.filter-section label {
+  color: #fff;
+}
+
+.pagination-section .pagination-btn {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: #fff;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.pagination-section .pagination-btn:hover {
+  background-color: #0056b3;
+}
+
+.pagination-section .pagination-span {
+  margin: 0 10px;
+}

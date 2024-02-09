@@ -18,15 +18,6 @@
     "stock": "40"
   },
   {
-    "id": 3,
-    "title": "Manaos",
-    "description": "Cola",
-    "price": 950,
-    "thumbnail": "https://res.cloudinary.com/dheurnsr0/image/upload/v1699399302/maple_dkozju.png",
-    "code": "abc125",
-    "stock": "40"
-  },
-  {
     "id": 4,
     "title": "Manaos",
     "description": "lima",

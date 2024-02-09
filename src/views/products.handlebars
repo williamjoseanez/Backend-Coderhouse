@@ -1,4 +1,19 @@
 <h1>Productos mongoDB-Mongoose</h1>
+<!-- Sección de filtrado -->
+<div class="filter-section">
+  <label for="category-select">Categoría:</label>
+  <select id="category-select">
+    <option value="">Todas las categorías</option>
+    <!-- Iterar sobre las categorías disponibles -->
+    {{#each categories}}
+      <option value="{{this}}">{{this}}</option>
+    {{/each}}
+  </select>
+
+  <!-- Otros elementos de filtrado (por ejemplo, cuadros de búsqueda) -->
+
+  <button id="apply-filter-btn">Aplicar filtro</button>
+</div>
 
 <div id="product-container">
   {{#each products}}
@@ -9,7 +24,19 @@
       <p>Description: {{this.description}}</p>
       <p>Price: $ {{this.price}}</p>
       <p>Category: {{this.category}}</p>
-      <!-- Agrega más detalles según sea necesario -->
+
     </div>
+  {{else}}
+    <!-- Manejar el caso en que no haya productos para mostrar -->
+    <p>No se encontraron productos.</p>
   {{/each}}
 </div>
+
+<!-- Sección de paginación -->
+<div class="pagination-section">
+  <button id="prev-page-btn">Anterior</button>
+  <span class="colorSpanBtn">Página {{currentPage}} de {{totalPages}}</span>
+  <button id="next-page-btn">Siguiente</button>
+</div>
+
+<script src="/src/public/js/product.js"></script>
