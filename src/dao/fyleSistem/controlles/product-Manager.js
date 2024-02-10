@@ -133,7 +133,8 @@ class ProductManager {
   async updateProduct(id, productAtualizado) {
     try {
       const arrayProductos = await this.leerArchivo();
-      const index = arrayProductos.findIndex((item) => item.id === id);
+
+      const index = arrayProductos.findIndex(item => item.id === id);
 
       if (index !== -1) {
         arrayProductos.splice(index, 1, productAtualizado);

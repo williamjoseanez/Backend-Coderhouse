@@ -1,8 +1,11 @@
 const express = require("express");
 const router = express.Router();
-const CartManager = require("../dao/fyleSistem/controlles/cart-Manager");
-const cartManager = new CartManager("./src/dao/fyleSistem/models/carts.json");
+const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
+const cartManager = new CartManager();
 
+
+
+// 1
 router.post("/", async (req, res) => {
   try {
     const newCart = await cartManager.createCart();
@@ -13,8 +16,9 @@ router.post("/", async (req, res) => {
   }
 });
 
+// 2
 router.get("/:cid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
 
   try {
     const cart = await cartManager.getCartById(cartId);
@@ -25,13 +29,14 @@ router.get("/:cid", async (req, res) => {
   }
 });
 
+//3
 router.post("/:cid/products/:pid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
   const productId = req.params.pid;
   const quantity = req.body.quantity || 1;
 
   try {
-    const updateCart = await cartManager.addProductToCart(
+    const updateCart = await cartManager.aggProductCart(
       cartId,
       productId,
       quantity
@@ -48,11 +53,14 @@ router.post("/:cid/products/:pid", async (req, res) => {
 
 // Agrego endpoint para eliminar un producto del carrito
 router.delete("/:cid/products/:pid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
   const productId = req.params.pid;
 
   try {
-    const updatedCart = await cartManager.removeProductFromCart(cartId, productId);
+    const updatedCart = await cartManager.removeProductFromCart(
+      cartId,
+      productId
+    );
     res.json(updatedCart.products);
   } catch (error) {
     console.error("Error al intentar eliminar un producto del carrito", error);
@@ -62,7 +70,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
 
 // Agrego endpoint para actualizar el carrito con un arreglo de productos
 router.put("/:cid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
   const { products } = req.body;
 
   try {
@@ -70,34 +78,44 @@ router.put("/:cid", async (req, res) => {
     res.json(updatedCart.products);
   } catch (error) {
     console.error("Error al intentar actualizar el carrito", error);
-    res.status(500).json({ error: "Error del servidor" });
+    res.status(500).json({ error: "Error del servidor al hacer put" });
   }
 });
 
-// Agrego endpoint para actualizar la cantidad de ejemplares de un producto en el carrito
+// // Agrego endpoint para actualizar la cantidad de ejemplares de un producto en el carrito
 router.put("/:cid/products/:pid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
   const productId = req.params.pid;
   const { quantity } = req.body;
 
   try {
-    const updatedCart = await cartManager.updateProductQuantity(cartId, productId, quantity);
+    const updatedCart = await cartManager.updateProductQuantity(
+      cartId,
+      productId,
+      quantity
+    );
     res.json(updatedCart.products);
   } catch (error) {
-    console.error("Error al intentar actualizar la cantidad de ejemplares de un producto en el carrito", error);
+    console.error(
+      "Error al intentar actualizar la cantidad de ejemplares de un producto en el carrito",
+      error
+    );
     res.status(500).json({ error: "Error del servidor" });
   }
 });
 
-// Agrego endpoint para eliminar todos los productos del carrito
+// // Agrego endpoint para eliminar todos los productos del carrito
 router.delete("/:cid", async (req, res) => {
-  const cartId = parseInt(req.params.cid);
+  const cartId = req.params.cid;
 
   try {
     await cartManager.clearCart(cartId);
     res.json({ message: "Todos los productos fueron eliminados del carrito" });
   } catch (error) {
-    console.error("Error al intentar eliminar todos los productos del carrito", error);
+    console.error(
+      "Error al intentar eliminar todos los productos del carrito",
+      error
+    );
     res.status(500).json({ error: "Error del servidor" });
   }
 });

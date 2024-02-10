@@ -1,96 +1,37 @@
 const express = require("express");
 const router = express.Router();
-const ProductManager = require("../dao/fyleSistem/controlles/product-Manager");
-const products = new ProductManager(
-  "./src/dao/fyleSistem/models/products.json"
-);
+const ProductManager = require("../dao/mongoDb/controllsDB/product-manager-db");
+const products = new ProductManager();
 
 // Metodo GET - Obtener productos con límite
 // router.get("/", async (req, res) => {
 //   try {
-//     const arrayProductos = await products.leerArchivo();
-
-//     let limit = parseInt(req.query.limit);
-
+//     const limit = req.query.limit;
+//     const productos = await products.getProducts();
+//     let productosRenderizados = productos;
 //     if (limit) {
-//       const arrayConLimite = arrayProductos.slice(0, limit);
-//       return res.send(arrayConLimite);
-//     } else {
-//       return res.send(arrayProductos);
+//       productosRenderizados = productos.slice(0, limit);
 //     }
+//     res.json("products", { productos: productosRenderizados });
 //   } catch (error) {
-//     console.log("error error error", error);
-//     return res.status(500).send("error al cargar el archivo");
+//     console.error("Error al obtener productos", error);
+//     res.status(500).json({ error: "Error interno del servidor" });
 //   }
 // });
-// Metodo GET - Obtener productos con límite, paginación y ordenamiento
 router.get("/", async (req, res) => {
   try {
-    const { limit = 10, page = 1, sort, query } = req.query;
-
-    // Obtengo todos los productos
-    let arrayProductos = await products.leerArchivo();
-
-    // Aplico filtros si existen
-    if (query) {
-      //filtro por categoría
-      arrayProductos = arrayProductos.filter(
-        (producto) => producto.categoria === query
-      );
+    const limit = req.query.limit;
+    const product = await products.getProducts();
+    if (limit) {
+      res.json(product.slice(0, limit));
+    } else {
+      res.json(product);
     }
-
-    // Aplico el  ordenamiento si está presente
-    if (sort) {
-      arrayProductos.sort((a, b) => {
-        if (sort === "asc") {
-          return a.precio - b.precio;
-        } else if (sort === "desc") {
-          return b.precio - a.precio;
-        } else {
-          return 0;
-        }
-      });
-    }
-
-    // Calculo el índice inicial y final para la paginación
-    const startIndex = (page - 1) * limit;
-    const endIndex = page * limit;
-
-    // Obtengo la página actual de productos
-    const arrayConPaginacion = arrayProductos.slice(startIndex, endIndex);
-
-    // Calculo el número total de páginas
-    const totalPages = Math.ceil(arrayProductos.length / limit);
-
-    // Creo objeto de respuesta con los productos paginados
-    const response = {
-      status: "success",
-      payload: arrayConPaginacion,
-      totalPages,
-      prevPage: page > 1 ? parseInt(page) - 1 : null,
-      nextPage: page < totalPages ? parseInt(page) + 1 : null,
-      page: parseInt(page),
-      hasPrevPage: page > 1,
-      hasNextPage: page < totalPages,
-      prevLink:
-        page > 1
-          ? `/api/products?limit=${limit}&page=${
-              parseInt(page) - 1
-            }&sort=${sort}&query=${query}`
-          : null,
-      nextLink:
-        page < totalPages
-          ? `/api/products?limit=${limit}&page=${
-              parseInt(page) + 1
-            }&sort=${sort}&query=${query}`
-          : null,
-    };
-
-    // Envio la respuesta
-    res.json(response);
   } catch (error) {
-    console.log("error error error", error);
-    res.status(500).json({ error: "Error al cargar el archivo" });
+    console.error("Error al obtener productos", error);
+    res.status(500).json({
+      error: "Error interno del servidor",
+    });
   }
 });
 
@@ -98,9 +39,9 @@ router.get("/", async (req, res) => {
 //Metodo GET - Obtener un producto por ID
 router.get("/:pid", async (req, res) => {
   try {
-    const pid = parseInt(req.params.pid);
+    const id = req.params.pid;
 
-    const buscar = await products.getProductById(pid);
+    const buscar = await products.getProductById(id);
 
     if (buscar) {
       res.json({ product: buscar });
@@ -127,11 +68,11 @@ router.post("/", async (req, res) => {
 // creamos metodo para actualizar producto
 
 router.put("/:pid", async (req, res) => {
-  try {
-    const productId = parseInt(req.params.pid);
-    const productoActualizado = req.body;
-    await products.updateProduct(productId, productoActualizado);
+  const id = req.params.pid;
+  const productoActualizado = req.body;
 
+  try {
+    await products.updateProduct(id, productoActualizado);
     res.json({ message: "Producto Actualizado Exitosamente" });
   } catch (error) {
     console.error(error);
@@ -141,10 +82,9 @@ router.put("/:pid", async (req, res) => {
 
 //Eliminar un producto por ID
 router.delete("/:pid", async (req, res) => {
+  const id = req.params.pid;
   try {
-    const productId = parseInt(req.params.pid);
-    await products.deletproduct(productId);
-
+    await products.deletproduct(id);
     res.json({ message: "Producto eliminado exitosamente" });
   } catch (error) {
     console.error(error);
