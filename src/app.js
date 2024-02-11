@@ -5,7 +5,9 @@ const cartsRouter = require("./routes/carts.router");
 const viewsRouter = require("./routes/views.router");
 const socket = require("socket.io");
 const ProductManager = require("./dao/fyleSistem/controlles/product-Manager.js");
-const products = new ProductManager("./src/dao/fyleSistem/models/products.json");
+const products = new ProductManager(
+  "./src/dao/fyleSistem/models/products.json"
+);
 const multer = require("multer");
 const MessageModel = require("./dao/mongoDb/modelsDB/message.model.js");
 const exphbs = require("express-handlebars"); // motor de plantilla handlebars
@@ -46,6 +48,8 @@ app.use("/api/cart", cartsRouter);
 const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchado http://localhost:${PUERTO}`);
 });
+
+
 
 const io = new socket.Server(httpServer);
 

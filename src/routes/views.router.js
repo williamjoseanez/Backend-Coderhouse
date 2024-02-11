@@ -72,4 +72,15 @@ router.get("/image/:id/delete", async (req, res) => {
   res.redirect("/upload");
 });
 
+// / Vista para mostrar todos los productos con paginación
+router.get("/products", async (req, res) => {
+  try {
+    const count = await ProductModel.countDocuments();
+    res.render("products");
+  } catch (error) {
+    console.error("Error al obtener productos:", error);
+    res.status(500).json({ error: "Error interno del servidor" });
+  }
+});
+
 module.exports = router;

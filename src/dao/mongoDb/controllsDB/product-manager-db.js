@@ -105,6 +105,7 @@ class ProductManager {
       throw error;
     }
   }
+  
 }
 
 module.exports = ProductManager;
