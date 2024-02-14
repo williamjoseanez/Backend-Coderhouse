@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const ProductModel = require("./dao/mongoDb/modelsDB/products.model");
 
+
 const main = async () => {
   mongoose
     .connect(
@@ -9,51 +10,55 @@ const main = async () => {
     .then(() => console.log("conectado a la base de datos mongoDB"))
     .catch((error) => console.error(error));
 
-  const result = await ProductModel.aggregate([
-    {
-      $match: {
-        category: "sin especificar"
-      }
-    },
-    {
-      $group: {
-        _id: "$title",
-        totalPrice: {
-          $sum: "$price"
-        }
-      }
-    },
-    {
-      // para ordenar de mayor a menor o visceversa
-      // 1: ascendente
-      // -1: descendente
-      $sort: {
-        totalPrice: -1
-      }
-    },
-    {
-      $group: {
+  // const result = await ProductModel.aggregate([
+  //   {
+  //     $match: {
+  //       category: "sin especificar",
+  //     },
+  //   },
+  //   {
+  //     $group: {
+  //       _id: "$title",
+  //       totalPrice: {
+  //         $sum: "$price",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     // para ordenar de mayor a menor o visceversa
+  //     // 1: ascendente
+  //     // -1: descendente
+  //     $sort: {
+  //       totalPrice: -1,
+  //     },
+  //   },
+  //   {
+  //     $group: {
+  //       _id: 1,
+  //       products: {
+  //         $push: "$$ROOT",
+  //       },
+  //     },
+  //   },
+  //   {
+  //     $project: {
+  //       _id: 0,
+  //       products: "$products",
+  //     },
+  //   },
+  //   {
+  //     $merge: {
+  //       into: "reports",
+  //     },
+  //   },
+  // ]);
 
-        
-        _id: 1,
-        products: {
-          $push: "$$ROOT"
-        }
-      }
-    },
-    {
-      $project: {
-        "_id": 0,
-        products: "$products"
-      }
-    },
-    {
-      $merge: {
-        into: "reports"
-      }
-    }
-  ])
-  console.log(result);
+  ////paginacion////
+  // const result = await ProductModel.paginate(
+  //   { price: "950" },
+  //   { limit: 2, page: 3 }
+  // );
+  // console.log(result);
 };
 
 main();

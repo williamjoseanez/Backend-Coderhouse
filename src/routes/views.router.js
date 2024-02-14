@@ -74,12 +74,69 @@ router.get("/image/:id/delete", async (req, res) => {
 
 // / Vista para mostrar todos los productos con paginación
 router.get("/products", async (req, res) => {
+  const page = req.query.page || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const sort = req.query.sort || "asc";
+  const query = req.query.query || "";
+
   try {
-    const count = await ProductModel.countDocuments();
-    res.render("products");
+    const productsList = await ProductModel.paginate(
+      {},
+      { limit },
+      { page },
+      { query },
+      { sort }
+    );
+
+    const productsResult = productsList.docs.map((product) => {
+      const { _id, ...rest } = product.toObject();
+      return rest;
+    });
+    // console.log(productsResult);
+    res.render("products", {
+      status: "success",
+      products: productsResult,
+      hasPrevPage: productsList.hasPrevPage,
+      hasNextPage: productsList.hasNextPage,
+      prevPage: productsList.prevPage,
+      nextPage: productsList.nextPage,
+      currentPage: productsList.page,
+      totalPages: productsList.totalPages,
+      query: query,
+      limit: limit,
+      prevLink: products.hasPrevPage
+        ? "/productList?page=" + productsList.prevPage
+        : null,
+      nextLink: products.hasNextPage
+        ? "/productList?page=" + productsList.nextPage
+        : null,
+    });
+    // console.log(productsList);
   } catch (error) {
     console.error("Error al obtener productos:", error);
-    res.status(500).json({ error: "Error interno del servidor" });
+    res.status(500).send({ error: "Error interno del servidor" });
+  }
+});
+
+// Ruta para mostrar los detalles del producto
+router.get("/productsdetail/:_id", async (req, res) => {
+  try {
+    const productId = req.params._id;
+    // Buscar el producto en la base de datos por su ID
+    const product = await ProductModel.findById(productId);
+
+    if (!product) {
+      // Si no se encuentra el producto, redirigir a una página de error o mostrar un mensaje
+      res.status(404).send("Producto no encontrado");
+      return;
+    }
+
+    // Renderizar la plantilla de detalles del producto y pasar los datos del producto
+    res.render("detalle", { product });
+  } catch (error) {
+    // Manejar cualquier error que ocurra durante la búsqueda del producto
+    console.error("Error al obtener los detalles del producto:", error);
+    res.status(500).send("Error interno del servidor");
   }
 });
 
