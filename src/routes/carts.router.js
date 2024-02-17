@@ -2,8 +2,7 @@ const express = require("express");
 const router = express.Router();
 const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
 const cartManager = new CartManager();
-
-
+const CartModel = require("../dao/mongoDb/modelsDB/cart.models");
 
 // 1
 router.post("/", async (req, res) => {
@@ -29,6 +28,16 @@ router.get("/:cid", async (req, res) => {
   }
 });
 
+// router.get("/", async (req, res) => {
+//   try {
+//     const allCarts = await cartManager.getAllCarts();
+//     res.render("carts", { carts: allCarts });
+//   } catch (error) {
+//     console.error("Error al obtener todos los carritos:", error);
+//     res.status(500).send({ error: "Error interno del servidor" });
+//   }
+// });
+
 //3
 router.post("/:cid/products/:pid", async (req, res) => {
   const cartId = req.params.cid;
@@ -51,6 +60,7 @@ router.post("/:cid/products/:pid", async (req, res) => {
   }
 });
 
+// 4
 // Agrego endpoint para eliminar un producto del carrito
 router.delete("/:cid/products/:pid", async (req, res) => {
   const cartId = req.params.cid;
@@ -67,7 +77,7 @@ router.delete("/:cid/products/:pid", async (req, res) => {
     res.status(500).json({ error: "Error del servidor" });
   }
 });
-
+// 5
 // Agrego endpoint para actualizar el carrito con un arreglo de productos
 router.put("/:cid", async (req, res) => {
   const cartId = req.params.cid;
@@ -81,7 +91,7 @@ router.put("/:cid", async (req, res) => {
     res.status(500).json({ error: "Error del servidor al hacer put" });
   }
 });
-
+// 6
 // // Agrego endpoint para actualizar la cantidad de ejemplares de un producto en el carrito
 router.put("/:cid/products/:pid", async (req, res) => {
   const cartId = req.params.cid;
@@ -103,7 +113,7 @@ router.put("/:cid/products/:pid", async (req, res) => {
     res.status(500).json({ error: "Error del servidor" });
   }
 });
-
+// 7
 // // Agrego endpoint para eliminar todos los productos del carrito
 router.delete("/:cid", async (req, res) => {
   const cartId = req.params.cid;

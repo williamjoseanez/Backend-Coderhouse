@@ -43,13 +43,12 @@ app.use(multer({ storage }).single("image"));
 app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
+app.use("/carts", cartsRouter);
 
 // pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
   console.log(`Escuchado http://localhost:${PUERTO}`);
 });
-
-
 
 const io = new socket.Server(httpServer);
 

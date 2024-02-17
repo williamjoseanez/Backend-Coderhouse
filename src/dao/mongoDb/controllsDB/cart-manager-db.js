@@ -2,13 +2,24 @@ const { Long } = require("mongodb");
 const CartModel = require("../modelsDB/cart.models");
 
 class CartManager {
+  async getAllCarts() {
+    try {
+      // Utilizo el método find() de Mongoose para obtener todos los carritos
+      const allCarts = await CartModel.find();
+      return allCarts;
+    } catch (error) {
+      console.error("Error al obtener todos los carritos:", error);
+      throw error;
+    }
+  }
+
   async crearCarrito() {
     try {
       const newCart = new CartModel({ products: [] });
       await newCart.save();
       return newCart;
     } catch (error) {
-      console.log("Error al crear el nuevo carrinho de compriñas");
+      console.log("Error al crear el nuevo carrito de compra");
     }
   }
 
@@ -123,6 +134,7 @@ class CartManager {
       throw error;
     }
   }
+  
 }
 
 module.exports = CartManager;

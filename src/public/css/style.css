@@ -301,3 +301,25 @@ nav a:hover {
 .pagination-section .pagination-span {
   margin: 0 10px;
 }
+
+/* Estilos para el contenedor de los botones de paginación */
+#pagination {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Estilos para los botones de paginación */
+#pagination a {
+  display: inline-block;
+  padding: 10px 20px;
+  margin: 0 5px;
+  background-color: #3a573b; /* Color de fondo verde */
+  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#pagination a:hover {
+  background-color: #647711; /* Cambia el color de fondo al pasar el cursor */
+}
