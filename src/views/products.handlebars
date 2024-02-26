@@ -9,14 +9,14 @@
       <p>Price: $ {{this.price}}</p>
       <p>Category: {{this.category}}</p>
       <p>ID:{{this._id}}</p>
-      <a href="/productsdetail" onclick="openProduct('{{this._id}}')"><button
-        >Detalles</button></a>
-            {{!-- <button onclick="viewDetails('{{this._id}}')">Detalles</button> --}}
+      {{!-- <a href="/productsdetail" onclick="openProduct('{{this._id}}')"><button --}}
+      {{! >Detalles</button></a> }}
+      {{!-- <button onclick="viewDetails('{{this._id}}')">Detalles</button> --}}
       <button onclick="addToCart('{{this._id}}')">Agregar al Carrito</button>
     </div>
   {{/each}}
 </div>
-
+<div id="message-container"></div>
 <div id="pagination">
   {{#if hasNextPage}}
     <a href="/products?page={{nextPage}}">Siguiente</a>
@@ -28,13 +28,3 @@
 </div>
 
 <p>Página actual: {{currentPage}} de {{totalPages}}</p>
-
-<script>
-  function openProduct(productId) { // Abrir el producto en una nueva página
-  window.open(`/productsdetail/${productId}`, '_blank'); }
-
-   function viewDetails(productId) {
-    // Redireccionar a la página de detalles del producto
-    window.location.href = `/productsdetail/${productId}`;
-  }
-</script>
