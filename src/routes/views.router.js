@@ -6,6 +6,8 @@ const ImagenModel = require("../dao/mongoDb/modelsDB/image.models");
 const path = require("path");
 const ProductModel = require("../dao/mongoDb/modelsDB/products.model");
 const fs = require("fs").promises;
+const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
+const cartManager = new CartManager();
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
@@ -72,49 +74,9 @@ router.get("/image/:id/delete", async (req, res) => {
   res.redirect("/upload");
 });
 
-// / Vista para mostrar todos los productos con paginación
-// router.get("/products", async (req, res) => {
-//   try {
-//     const { page = 1, limit = 10 } = req.query;
-
-//     const productsList = await products.getProducts({
-//       page: parseInt(page),
-//       limit: parseInt(limit),
-//     });
-
-//     const productsResult = productsList.docs.map((product) => {
-//       const { _id, ...rest } = product.toObject();
-//       return rest;
-//     });
-
-//     // console.log(productsResult);
-//     res.render("products", {
-//       status: "success",
-//       products: productsResult,
-//       hasPrevPage: productsList.hasPrevPage,
-//       hasNextPage: productsList.hasNextPage,
-//       prevPage: productsList.prevPage,
-//       nextPage: productsList.nextPage,
-//       currentPage: productsList.page,
-//       totalPages: productsList.totalPages,
-     
-//       // prevLink: products.hasPrevPage
-//       //   ? "/productList?page=" + productsList.prevPage
-//       //   : null,
-//       // nextLink: products.hasNextPage
-//       //   ? "/productList?page=" + productsList.nextPage
-//       //   : null,
-//     });
-//     // console.log(productsList);
-//   } catch (error) {
-//     console.error("Error al obtener productos:", error);
-//     res.status(500).send({ error: "Error interno del servidor" });
-//   }
-// });
-
 router.get("/products", async (req, res) => {
   try {
-    const { page = 1, limit = 10 } = req.query;
+    const { page = 1, limit = 8 } = req.query;
 
     const productsList = await products.getProducts({
       page: parseInt(page),
@@ -138,8 +100,33 @@ router.get("/products", async (req, res) => {
       totalPages: productsList.totalPages,
     });
   } catch (error) {
-    console.error('Error al obtener productos:', error);
-    res.status(500).json({ error: 'Error al obtener productos.' });
+    console.error("Error al obtener productos:", error);
+    res.status(500).json({ error: "Error al obtener productos." });
+  }
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+router.get("/carts/:cid", async (req, res) => {
+  const cartId = req.params.cid;
+
+  try {
+    const cart = await cartManager.getCartById(cartId);
+
+    if (!cart) {
+      console.log("No existe ese carrito con el id");
+      return res.status(404).json({ error: "Carrito no encontrado" });
+    }
+
+    const productsInTheCart = cart.products.map((item) => ({
+      product: item.product.toObject(),
+      //Lo convertimos a objeto para pasar las restricciones de Exp Handlebars.
+      quantity: item.quantity,
+    }));
+
+    res.render("carts", { products: productsInTheCart });
+  } catch (error) {
+    console.error("Error al obtener el carrito", error);
+    res.status(500).json({ error: "Error interno del servidor" });
   }
 });
 

@@ -19,7 +19,6 @@ class ProductManager {
         return;
       }
       // validamos codigo unico
-      
 
       const existingProduct = await ProductsModel.findOne({ code: code });
       if (existingProduct) {
@@ -51,50 +50,56 @@ class ProductManager {
 
   async getProducts({ limit = 10, page = 1, sort, query } = {}) {
     try {
-        const skip = (page - 1) * limit;
+      const skip = (page - 1) * limit;
 
-        let queryOptions = {};
+      let queryOptions = {};
 
-        if (query) {
-            queryOptions = { category: query };
+      if (query) {
+        queryOptions = { category: query };
+      }
+
+      const sortOptions = {};
+      if (sort) {
+        if (sort === "asc" || sort === "desc") {
+          sortOptions.price = sort === "asc" ? 1 : -1;
         }
+      }
 
-        const sortOptions = {};
-        if (sort) {
-            if (sort === 'asc' || sort === 'desc') {
-                sortOptions.price = sort === 'asc' ? 1 : -1;
-            }
-        }
+      const productos = await ProductsModel.find(queryOptions)
+        .sort(sortOptions)
+        .skip(skip)
+        .limit(limit);
 
-        const productos = await ProductsModel
-            .find(queryOptions)
-            .sort(sortOptions)
-            .skip(skip)
-            .limit(limit);
+      const totalProducts = await ProductsModel.countDocuments(queryOptions);
 
-        const totalProducts = await ProductsModel.countDocuments(queryOptions);
+      const totalPages = Math.ceil(totalProducts / limit);
+      const hasPrevPage = page > 1;
+      const hasNextPage = page < totalPages;
 
-        const totalPages = Math.ceil(totalProducts / limit);
-        const hasPrevPage = page > 1;
-        const hasNextPage = page < totalPages;
-
-        return {
-            docs: productos,
-            totalPages,
-            prevPage: hasPrevPage ? page - 1 : null,
-            nextPage: hasNextPage ? page + 1 : null,
-            page,
-            hasPrevPage,
-            hasNextPage,
-            prevLink: hasPrevPage ? `/api/products?limit=${limit}&page=${page - 1}&sort=${sort}&query=${query}` : null,
-            nextLink: hasNextPage ? `/api/products?limit=${limit}&page=${page + 1}&sort=${sort}&query=${query}` : null,
-        };
+      return {
+        docs: productos,
+        totalPages,
+        prevPage: hasPrevPage ? page - 1 : null,
+        nextPage: hasNextPage ? page + 1 : null,
+        page,
+        hasPrevPage,
+        hasNextPage,
+        prevLink: hasPrevPage
+          ? `/api/products?limit=${limit}&page=${
+              page - 1
+            }&sort=${sort}&query=${query}`
+          : null,
+        nextLink: hasNextPage
+          ? `/api/products?limit=${limit}&page=${
+              page + 1
+            }&sort=${sort}&query=${query}`
+          : null,
+      };
     } catch (error) {
-        console.log("Error al obtener los productos", error);
-        throw error;
+      console.log("Error al obtener los productos", error);
+      throw error;
     }
-}
-  
+  }
 
   async getProductById(id) {
     try {
@@ -143,7 +148,6 @@ class ProductManager {
       throw error;
     }
   }
-  
 }
 
 module.exports = ProductManager;

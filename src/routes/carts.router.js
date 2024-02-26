@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
 const cartManager = new CartManager();
-const CartModel = require("../dao/mongoDb/modelsDB/cart.models");
+const CartModel = require("../dao/mongoDb/controllsDB/cart-manager-db");
 
 // 1
 router.post("/", async (req, res) => {
@@ -20,23 +20,18 @@ router.get("/:cid", async (req, res) => {
   const cartId = req.params.cid;
 
   try {
-    const cart = await cartManager.getCartById(cartId);
+    const cart = await CartModel.findById(cartId)
+            
+    if (!carrito) {
+        console.log("No existe ese carrito con el id");
+        return res.status(404).json({ error: "Carrito no encontrado" });
+    }
     res.json(cart.products);
   } catch (error) {
     console.error("Error al querer obtener el Carrito", error);
     res.status(500).json({ error: "Error del Servidor" });
   }
 });
-
-// router.get("/", async (req, res) => {
-//   try {
-//     const allCarts = await cartManager.getAllCarts();
-//     res.render("carts", { carts: allCarts });
-//   } catch (error) {
-//     console.error("Error al obtener todos los carritos:", error);
-//     res.status(500).send({ error: "Error interno del servidor" });
-//   }
-// });
 
 //3
 router.post("/:cid/products/:pid", async (req, res) => {
@@ -71,20 +66,27 @@ router.delete("/:cid/products/:pid", async (req, res) => {
       cartId,
       productId
     );
-    res.json(updatedCart.products);
+    res.json({
+      status: 'success',
+      message: 'Producto eliminado del carrito correctamente',
+      updatedCart,
+    });
   } catch (error) {
-    console.error("Error al intentar eliminar un producto del carrito", error);
-    res.status(500).json({ error: "Error del servidor" });
+    console.error('Error al eliminar el producto del carrito', error);
+    res.status(500).json({
+      status: 'error',
+      error: 'Error interno del servidor',
+    });
   }
 });
 // 5
 // Agrego endpoint para actualizar el carrito con un arreglo de productos
 router.put("/:cid", async (req, res) => {
   const cartId = req.params.cid;
-  const { products } = req.body;
+  const updatedProducts  = req.body;
 
   try {
-    const updatedCart = await cartManager.updateCart(cartId, products);
+    const updatedCart = await cartManager.updateCart(cartId, updatedProducts);
     res.json(updatedCart.products);
   } catch (error) {
     console.error("Error al intentar actualizar el carrito", error);
@@ -96,7 +98,7 @@ router.put("/:cid", async (req, res) => {
 router.put("/:cid/products/:pid", async (req, res) => {
   const cartId = req.params.cid;
   const productId = req.params.pid;
-  const { quantity } = req.body;
+  const newQuantity = req.body.quantity;
 
   try {
     const updatedCart = await cartManager.updateProductQuantity(
@@ -116,11 +118,17 @@ router.put("/:cid/products/:pid", async (req, res) => {
 // 7
 // // Agrego endpoint para eliminar todos los productos del carrito
 router.delete("/:cid", async (req, res) => {
+  try {
   const cartId = req.params.cid;
 
-  try {
-    await cartManager.clearCart(cartId);
-    res.json({ message: "Todos los productos fueron eliminados del carrito" });
+  const updatedCart = await cartManager.clearCart(cartId);
+
+
+  res.json({
+    status: 'success',
+    message: 'Todos los productos del carrito fueron eliminados correctamente',
+    updatedCart,
+});
   } catch (error) {
     console.error(
       "Error al intentar eliminar todos los productos del carrito",
