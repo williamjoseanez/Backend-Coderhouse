@@ -14,7 +14,6 @@ const cartManager = new CartManager();
 //   logoutUser,
 // } = require("../dao/controllers/authController");
 
-
 // router.get('/', async (req, res) => {
 //   try {
 //     const productos = await products.getProducts();
@@ -27,7 +26,6 @@ const cartManager = new CartManager();
 //     res.status(500).json({ error: 'Error interno del servidor' });
 //   }
 // });
-
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
@@ -118,6 +116,7 @@ router.get("/products", async (req, res) => {
       nextPage: productsList.nextPage,
       currentPage: productsList.page,
       totalPages: productsList.totalPages,
+      user: req.session.user,
     });
   } catch (error) {
     console.error("Error al obtener productos:", error);
@@ -178,16 +177,15 @@ router.get("/productsdetail/:_id", async (req, res) => {
 // router.get("/logout", logoutUser);
 
 //Login
-router.get("/login", (req,res) =>{
-  if (req.session.login){
+router.get("/login", (req, res) => {
+  if (req.session.login) {
     return res.redirect("/products");
   }
   res.render("login");
 });
 
-
 // Registro
-router.get("/register", (req,res)=>{
+router.get("/register", (req, res) => {
   if (req.session.login) {
     return res.redirect("/profile");
   }
@@ -195,11 +193,11 @@ router.get("/register", (req,res)=>{
 });
 
 //Perfil
-router.get("/profile", (req,res)=>{
-  if(!req.session.login){
+router.get("/profile", (req, res) => {
+  if (!req.session.login) {
     return res.redirect("/login");
   }
-  res.render("profile", {user: req.session.user});
+  res.render("profile", { user: req.session.user });
 });
 
 module.exports = router;
