@@ -14,6 +14,15 @@ const exphbs = require("express-handlebars"); // motor de plantilla handlebars
 const messages = []; // Aquí agrego la línea para inicializar 'messages', del chat box
 const PUERTO = 8080; // creo  puerto
 require("../src/database.js");
+const cookieParser = require("cookie-parser");
+const session = require("express-session");
+const FileStore = require("session-file-store");
+const fileStore = FileStore(session);
+const MongoStore = require("connect-mongo");
+const userRouter = require("./routes/user.router");
+const sessionRouter = require("./routes/sessions.router.js");
+const passport = require("passport");
+const initializePassport = require("./config/passport.config.js");
 
 const app = express(); // creamos app
 
@@ -26,6 +35,19 @@ app.set("views", "./src/views"); // defino el directorio donde se encuentran las
 app.use(express.static("./src/public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(
+  session({
+    secret: "secretCoder",
+    resave: true,
+    saveUninitilazed: true,
+    store: MongoStore.create({
+      mongoUrl:
+        "mongodb+srv://williamjoseanez:William17735207@cluster0.fpryakl.mongodb.net/ecommerce?retryWrites=true&w=majority",
+      ttl: 90,
+    }),
+  })
+);
 
 // configuro multer
 const storage = multer.diskStorage({
@@ -43,7 +65,12 @@ app.use(multer({ storage }).single("image"));
 app.use("/", viewsRouter);
 app.use("/api/products", productRouter);
 app.use("/api/cart", cartsRouter);
-// app.use("/carts", cartsRouter);
+app.use("/api/users", userRouter);
+app.use("/api/sessions", sessionRouter);
+
+initializePassport();
+app.use(passport.initialize());
+app.use(passport.session());
 
 // pongo a escuchar al segvidor
 const httpServer = app.listen(PUERTO, () => {
@@ -96,4 +123,20 @@ io.on("connection", async (socket) => {
     await products.addProduct(product);
     io.sockets.emit("products", products.getProducts());
   });
+});
+
+//Login
+app.get("/login", (req,res)=>{
+  let user = req.query.user;
+
+  req.session.user = user;
+  res.send("Guardamos el User por medio de Query");
+});
+
+//Usuario
+app.get ("/user",(req,res)=>{
+  if(req.session.user){
+    return res.send(`El usuario registrado es: ${req.session.user}`);
+  }
+  res.send("No tenemos un usuario registrado");
 });

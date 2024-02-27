@@ -8,6 +8,11 @@ const ProductModel = require("../dao/mongoDb/modelsDB/products.model");
 const fs = require("fs").promises;
 const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
 const cartManager = new CartManager();
+const {
+  loginUser,
+  registerUser,
+  logoutUser,
+} = require("../dao/controllers/authController");
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
@@ -150,6 +155,36 @@ router.get("/productsdetail/:_id", async (req, res) => {
     console.error("Error al obtener los detalles del producto:", error);
     res.status(500).send("Error interno del servidor");
   }
+});
+/////////////////////////////////////////login////////////////////////
+// Rutas para login, registro y logout
+// router.post("/login", loginUser);
+// router.post("/register", registerUser);
+// router.get("/logout", logoutUser);
+
+//Login
+router.get("/login", (req,res) =>{
+  if (req.session.login){
+    return res.redirect("/products");
+  }
+  res.render("login");
+});
+
+
+// Registro
+router.get("/register", (req,res)=>{
+  if (req.session.login) {
+    return res.redirect("/profile");
+  }
+  res.render("register");
+});
+
+//Perfil
+router.get("/profile", (req,res)=>{
+  if(!req.session.login){
+    return res.redirect("/login");
+  }
+  res.render("profile", {user: req.session.user});
 });
 
 module.exports = router;

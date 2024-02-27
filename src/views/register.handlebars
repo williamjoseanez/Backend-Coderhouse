@@ -1,0 +1,43 @@
+<div>
+  <h2>Registro</h2>
+</div>
+<div class="upload">
+  <form action="/api/users" method="post">
+
+    <label for="first_name">Nombre: </label>
+    <input
+      type="text"
+      id="first_name"
+      name="first_name"
+      placeholder="Nombre"
+      required
+    />
+    <label for="last_name">Apellido: </label>
+    <input
+      type="text"
+      id="last_name"
+      name="last_name"
+      placeholder="Apellido"
+      required
+    />
+    <label for="email">Email: </label>
+    <input type="email" id="email" name="email" placeholder="Email" required />
+    <label for="Password">Contraseña: </label>
+    <input
+      type="password"
+      id="password"
+      name="password"
+      placeholder="Contraseña"
+      required
+    />
+    <label for="Age">Edad: </label>
+    <input type="number" id="age" name="age" placeholder="Edad" required />
+
+    <button type="submit">Registrarme</button>
+
+  </form>
+</div>
+<div>
+  ¿Ya tienes una cuenta?
+  <a href="/login">Iniciar Sesión</a>
+</div>
