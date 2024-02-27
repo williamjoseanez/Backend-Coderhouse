@@ -369,6 +369,8 @@ nav a:hover {
   width: 100%;
   margin: 0 auto;
 }
+.login-form input[type="text"],
+.login-form input[type="number"],
 .login-form input[type="email"],
 .login-form input[type="password"],
 .login-form button[type="submit"] {
