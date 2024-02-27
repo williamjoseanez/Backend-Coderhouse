@@ -1,7 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  height: 100%;
+  min-height: 100vh; /* Cambiado a min-height para asegurar que el cuerpo tenga al menos la altura de la ventana */
+  /* height: 100%; */
   background-color: rgb(228, 216, 216);
   background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
   /* background-repeat: no-repeat; */
@@ -14,6 +15,7 @@ h1 {
   background-color: rgb(3, 3, 3);
   text-align: center;
   border-radius: 5%;
+  padding: 1rem; /* Agregado padding para mejorar la legibilidad */
 }
 
 p {
@@ -24,10 +26,13 @@ p {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 2rem; /* Espacio superior para separar del encabezado */
 }
 
 .container img {
+  max-width: 100%; /* Hacer la imagen completamente responsive */
   width: 200px;
+  height: auto;
   border-radius: 30%;
 }
 
@@ -44,6 +49,27 @@ p {
   overflow: hidden;
   transition: transform 0.3s;
   box-sizing: border-box; /* Asegura que el ancho incluya el padding y el borde */
+}
+.card-Bienvenido {
+  display: inline-block;
+  background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
+  font-family: Arial, sans-serif;
+  padding: 1em;
+  max-width: 350px; /* Ajusta el ancho máximo según tus necesidades */
+  margin: 10px auto auto 550px; /* Centrar horizontalmente en lugar de establecer un margen específico */
+  border: 1px solid #5f0707;
+  border-radius: 8px;
+  overflow: hidden;
+  transition: transform 0.3s;
+  box-sizing: border-box; /* Asegura que el ancho incluya el padding y el borde */
+}
+
+/* Media query para hacer la tarjeta responsive */
+@media only screen and (max-width: 768px) {
+  .card-Bienvenido {
+    max-width: 100%; /* Cambiar el ancho máximo a 100% en pantallas más pequeñas */
+    margin: 30px; /* Centrar horizontalmente en pantallas más pequeñas */
+  }
 }
 
 /* Estilo para la imagen de la tarjeta */
@@ -67,6 +93,13 @@ p {
   .card {
     flex: 100%; /* Hace que las tarjetas ocupen el 100% del ancho en pantallas pequeñas */
   }
+  .container img {
+    width: 80%; /* Reducir el tamaño de la imagen en pantallas más pequeñas */
+  }
+
+  .div-form {
+    margin-top: 1rem; /* Ajustar el espacio superior en pantallas más pequeñas */
+  }
 }
 
 /* formulario */
@@ -75,6 +108,7 @@ p {
   display: flex;
   justify-content: center;
   color: #ffffff;
+  margin-top: 2rem; /* Agregado espacio superior para separar del contenido superior */
 }
 form {
   max-width: 300px;
@@ -109,6 +143,7 @@ select {
 .color-button {
   background-image: url("https://res.cloudinary.com/dheurnsr0/image/upload/v1705343819/CI7GA76FD5GVPMHC354LEZK3X4_dlunvs.jpg");
   height: 10vh;
+  width: 100%; /* Asegurar que el botón ocupe todo el ancho */
 }
 div button {
   background-color: #1c1e22;
@@ -322,4 +357,46 @@ nav a:hover {
 
 #pagination a:hover {
   background-color: #647711; /* Cambia el color de fondo al pasar el cursor */
+}
+
+/*LOGIN*/
+
+.login-container {
+  padding: 2rem;
+  /* border: 1px solid #ccc; */
+  /* border-radius: 5px; */
+  max-width: 400px;
+  width: 100%;
+  margin: 0 auto;
+}
+.login-form input[type="email"],
+.login-form input[type="password"],
+.login-form button[type="submit"] {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+.login-form button[type="submit"] {
+  background-color: #0651a1;
+  color: #fff;
+  cursor: pointer;
+}
+.login-form button[type="submit"]:hover {
+  background-color: #043815;
+}
+.login {
+  display: grid;
+  justify-content: center;
+  margin: auto;
+}
+.login h3 {
+  color: #fff;
+}
+
+.login a {
+  color: #a8c40b;
+  background-color: #010a01;
 }
