@@ -11,6 +11,8 @@
   </div>
 
 {{/if}}
+
+
 <div id="product-container">
   {{#each products}}
     <div class="card">
@@ -19,11 +21,7 @@
       <p>Description: {{this.description}}</p>
       <p>Price: $ {{this.price}}</p>
       <p>Category: {{this.category}}</p>
-      {{!-- <p>ID:{{this._id}}</p> --}}
-      {{!-- <a href="/productsdetail" onclick="openProduct('{{this._id}}')"><button --}}
-      {{! >Detalles</button></a> }}
-      {{!-- <button onclick="viewDetails('{{this._id}}')">Detalles</button> --}}
-      <button onclick="addToCart('{{this._id}}')">Agregar al Carrito</button>
+        <button onclick="addToCart('{{this._id}}')">Agregar al Carrito</button>
     </div>
   {{/each}}
 </div>

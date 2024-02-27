@@ -8,11 +8,26 @@ const ProductModel = require("../dao/mongoDb/modelsDB/products.model");
 const fs = require("fs").promises;
 const CartManager = require("../dao/mongoDb/controllsDB/cart-manager-db");
 const cartManager = new CartManager();
-const {
-  loginUser,
-  registerUser,
-  logoutUser,
-} = require("../dao/controllers/authController");
+// const {
+//   loginUser,
+//   registerUser,
+//   logoutUser,
+// } = require("../dao/controllers/authController");
+
+
+// router.get('/', async (req, res) => {
+//   try {
+//     const productos = await products.getProducts();
+//     res.render('login', { products: productos });
+//     if (!req.session.login) {
+//       return res.redirect('/login');
+//     }
+//   } catch (error) {
+//     console.log('Error al obtener productos:', error);
+//     res.status(500).json({ error: 'Error interno del servidor' });
+//   }
+// });
+
 
 // Ruta para la vista en tiempo real
 router.get("/realtimeproducts", async (req, res) => {
