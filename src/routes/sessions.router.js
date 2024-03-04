@@ -8,7 +8,7 @@ router.post("/login", async (req, res) => {
   const { email, password } = req.body;
 
   // Verifico si las credenciales coinciden con el administrador
-  if (email === "adminCoder@coder.com" && password === "adminCod3r123") {
+  if (email === "adminCoder@coder.com" && password === "adminCoder@coder.com") {
     // Si las credenciales son correctas para el administrador, configuro la sesión del usuario como administrador
     req.session.user = {
       first_name: "Admin",
@@ -66,7 +66,7 @@ router.get("/faillogin", async (req, res) => {
   res.json({ message: "fallo la estrategia" });
 });
 
-/////////////////////////////////////////////////////////////////////////////////VERSION PARA GITHUB
+///////////////////////////////////////////////VERSION PARA GITHUB
 
 router.get(
   "/github",
@@ -78,12 +78,14 @@ router.get(
   "/githubcallback",
   passport.authenticate("github", { failureRedirect: "/login" }),
   async (req, res) => {
+    //La estrategía de github nos retornará el usuario, entonces lo agregamos a nuestro objeto de session.
     req.session.user = req.user;
     req.session.login = true;
-    res.redirect("/profile");
+    res.redirect("/products");
   }
 );
-// //////////////////////////////////////////////////////////////////////////////////////////JWT
+
+// /////////////////////////////////////////////////////////////JWT
 // router.post("/login", async (req, res) => {
 //   const { email, password } = req.body;
 //   try {

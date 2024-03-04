@@ -44,13 +44,10 @@ const initializePassport = () => {
       { usernameField: "email" },
       async (email, password, done) => {
         try {
-          const user = await UserModel.findOne({ email });
-          if (!user) {
-            console.log("Este usuario no existeeee ahhh");
-            return done(null, false);
-          }
-          if (!isValidPassword(password, user)) return done(null, false);
-          return done(null, user);
+          const userExist = await UserModel.findOne({ email });
+          if (!userExist) return done(null, false);
+          if (!isValidPassword(password, userExist)) return done(null, false);
+          return done(null, userExist);
         } catch (error) {
           return done(error);
         }
@@ -68,41 +65,87 @@ const initializePassport = () => {
   });
 
   // //////////////////////////////////Estategia GitHub
-  passport.use(
-    "github",
-    new GitHubStrategy(
-      {
-        clientID: "Iv1.48e7a6e65207a327",
-        clientSecret: "0baaa5e04267f8258e99087058d7b92d782a446a",
-        callbackURL: "http://localhost:8080/api/session/githubcallback",
-      },
-      async (accessToken, refreshToken, profile, done) => {
-        console.log("Profile: ", profile);
-        try {
-          let user = await UserModel.findOne({
-            email: profile._json.email,
-          });
-
-          if (!user) {
-            let newUser = {
-              first_name: profile._json.name,
-              last_name: "",
-              age: 38,
+    passport.use(
+      "github",
+      new GitHubStrategy(
+        {
+          clientID: "Iv1.48e7a6e65207a327",
+          clientSecret: "0baaa5e04267f8258e99087058d7b92d782a446a",
+          callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+        },
+        // clientSecret nueva 607b8c50ed69ab8b8cbeaba6f9e4139014b74fe2
+        async (accessToken, refreshToken, profile, done) => {
+          console.log("Profile: ", profile);
+          try {
+            let user = await UserModel.findOne({
               email: profile._json.email,
-              password: "",
-            };
+            });
 
-            let result = await UserModel.create(newUser);
-            done(null, result);
-          } else {
-            done(null, user);
+            if (!user) {
+              let newUser = {
+                first_name: profile._json.name,
+                last_name: "",
+                age: 38,
+                email: profile._json.email,
+                password: "",
+              };
+
+              let result = await UserModel.create(newUser);
+              done(null, result);
+            } else {
+              done(null, user);
+            }
+          } catch (error) {
+            return done(error);
           }
-        } catch (error) {
-          return done(error);
         }
-      }
-    )
-  );
-};
+      )
+    );
+  };
+//   passport.use(
+//     "github",
+//     new GitHubStrategy(
+//       {
+//         clientID: "Iv1.48e7a6e65207a327",
+//         clientSecret: "0baaa5e04267f8258e99087058d7b92d782a446a",
+//         callbackURL: "http://localhost:8080/api/sessions/githubcallback",
+//       },
+//       async (accessToken, refreshToken, profile, done) => {
+//         console.log("Profile: ", profile);
+//         try {
+//           let email = profile._json.email;
+
+//           if (!email) {
+//             // El usuario no otorgó permisos para acceder a su correo electrónico
+//             return done(
+//               new Error(
+//                 "El usuario no ha proporcionado su dirección de correo electrónico."
+//               )
+//             );
+//           }
+
+//           let user = await UserModel.findOne({ email });
+
+//           if (!user) {
+//             let newUser = {
+//               first_name: profile._json.name,
+//               last_name: "",
+//               age: 38,
+//               email: email,
+//               password: "",
+//             };
+
+//             let result = await UserModel.create(newUser);
+//             done(null, result);
+//           } else {
+//             done(null, user);
+//           }
+//         } catch (error) {
+//           return done(error);
+//         }
+//       }
+//     )
+//   );
+// };
 
 module.exports = initializePassport;

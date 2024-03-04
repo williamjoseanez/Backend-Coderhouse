@@ -26,10 +26,12 @@
       <span>Don't have an account?<a href="/register">&nbsp;Sign Up</a></span>
       <button
         type="button"
-        onclick="window.location.href='/api/session/github'"
+        onclick="window.location.href='/api/sessions/github'"
         aria-disabled="false"
       >
+
         <div>
+
           <div>
             <svg
               width="52"
@@ -131,15 +133,15 @@
       />
 
       <button type="submit">Login</button>
+      <button
+        {{! class="color-button" }}
+        type="submit"
+        onclick="window.location.href='http://localhost:8080/'"
+      >
+        Ir a Inicio
+      </button>
     </form>
 
-    <button
-      class="color-button"
-      type="button"
-      onclick="window.location.href='http://localhost:8080/'"
-    >
-      Ir a Inicio
-    </button>
   </div>
 
 </div>
