@@ -1,7 +1,13 @@
  {{>header}}
+<div class="login-container">
+    <div class="login">
+        <div class="login-form">
+            <h2>Mi Perfil</h2>
+            <p>Bienvenido!, {{user.first_name}} {{user.last_name}}!</p>
+            <p>Email: {{user.email}}</p>
+            <p>Edad: {{user.age}}</p>
+            <a href="/api/sessions/logout">Logout</a>
 
-<h2>Mi Perfil</h2>
-<p>Bienvenido!, {{user.first_name}} {{user.last_name}}!</p>
-<p>Email: {{user.email}}</p>
-<p>Edad: {{user.age}}</p>
-<a href="/api/sessions/logout">Logout</a>
+        </div>
+    </div>
+</div>

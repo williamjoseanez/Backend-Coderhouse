@@ -14,6 +14,7 @@ const exphbs = require("express-handlebars"); // motor de plantilla handlebars
 const messages = []; // Aquí agrego la línea para inicializar 'messages', del chat box
 const PUERTO = 8080; // creo  puerto
 require("../src/database.js");
+
 const cookieParser = require("cookie-parser");
 const session = require("express-session");
 const FileStore = require("session-file-store");

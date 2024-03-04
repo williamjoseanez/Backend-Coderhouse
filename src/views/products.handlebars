@@ -5,9 +5,7 @@
 {{#if user}}
   <div class="card-Bienvenido">
     <h3>¡Bienvenido {{user.first_name}} {{user.last_name}}!</h3>
-    <p>Email: {{user.email}}</p>
-    <p>Role: {{user.role}}</p>
-
+    <p>Email: {{user.email}},  Role: {{user.role}}</p>
     <button>
     <a href="/api/sessions/logout" style="color: #c5d81c;">Cerrar Sesion</a>
     </button>

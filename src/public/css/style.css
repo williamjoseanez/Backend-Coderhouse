@@ -402,3 +402,175 @@ nav a:hover {
   color: #a8c40b;
   background-color: #010a01;
 }
+
+/* //////////////////////////////////////////// */
+
+.css-182lk0b {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-left: 110px;
+  width: 80px;
+}
+
+.madkudu_modal.open {
+  display: block;
+}
+.madkudu_modal__overlay {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  background: #4a90e2;
+  opacity: 0.85;
+}
+.madkudu_modal__canvas {
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  text-align: center;
+  font-family: Open Sans, Helvetica Neue, Helvetica, sans-serif;
+  z-index: 100001;
+}
+.madkudu_modal__box_parent {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.madkudu_modal__box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.madkudu_modal__title {
+  font-size: 50px;
+  line-height: 50px;
+  color: #fff;
+  padding-bottom: 30px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+.madkudu_modal__subtitle {
+  color: #fff;
+  font-size: 24px;
+  line-height: 35px;
+  padding-bottom: 40px;
+}
+.madkudu_modal__button {
+  line-height: 2em;
+  color: #fff;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
+}
+.madkudu_modal__button--primary {
+  line-height: 2em;
+  color: #fff;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
+  width: 350px;
+  background-color: #077355;
+  font-size: 19px;
+}
+.madkudu_modal__button--primary:hover {
+  background-color: #066355;
+  color: #fff;
+}
+.madkudu_modal__button--secondary {
+  line-height: 2em;
+  color: #fff;
+  display: inline-block;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 0;
+  cursor: pointer;
+  text-decoration: none;
+  outline: none;
+  transition: background-color 0.2s ease-in, color 0.2s ease-in;
+  width: 180px;
+  margin-left: 20px;
+  margin-right: 20px;
+  text-decoration: underline;
+  font-size: 15px;
+  background-color: transparent;
+}
+.madkudu_modal__button--secondary:hover {
+  color: #ddd;
+}
+.madkudu_modal__branding {
+  color: #fff;
+  font-size: 13px;
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  color: #d9d9d9;
+}
+.madkudu_modal__branding a {
+  text-decoration: none;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+@-webkit-keyframes lg-ui-ripple {
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    transition: opacity 300ms;
+    opacity: 0;
+  }
+}
+
+@-moz-keyframes lg-ui-ripple {
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    transition: opacity 300ms;
+    opacity: 0;
+  }
+}
+
+@keyframes lg-ui-ripple {
+  from {
+    opacity: 1;
+  }
+  to {
+    transform: scale(2);
+    transition: opacity 300ms;
+    opacity: 0;
+  }
+}
+
+.lg-ui-ripple {
+  position: absolute;
+  border-radius: 100%;
+  transform: scale(0.2);
+  opacity: 0;
+  pointer-events: none;
+  /* // Ensures that text is shown above ripple effect */
+  z-index: -1;
+  -webkit-animation: lg-ui-ripple 0.75s ease-out;
+  -moz-animation: lg-ui-ripple 0.75s ease-out;
+  animation: lg-ui-ripple 0.75s ease-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lg-ui-ripple {
+    animation: none;
+    transform: none;
+  }
+}

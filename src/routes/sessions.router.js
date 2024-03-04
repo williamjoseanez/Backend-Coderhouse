@@ -66,4 +66,40 @@ router.get("/faillogin", async (req, res) => {
   res.json({ message: "fallo la estrategia" });
 });
 
+/////////////////////////////////////////////////////////////////////////////////VERSION PARA GITHUB
+
+router.get(
+  "/github",
+  passport.authenticate("github", { scope: ["user:email"] }),
+  async (req, res) => {}
+);
+
+router.get(
+  "/githubcallback",
+  passport.authenticate("github", { failureRedirect: "/login" }),
+  async (req, res) => {
+    req.session.user = req.user;
+    req.session.login = true;
+    res.redirect("/profile");
+  }
+);
+// //////////////////////////////////////////////////////////////////////////////////////////JWT
+// router.post("/login", async (req, res) => {
+//   const { email, password } = req.body;
+//   try {
+//     const user = await UserModel.findOne({ email: email });
+//     if (!user) {
+//       res.status(400).send({status:"error", message: "usuario desconocido"})
+//     }
+//     if (isValidPassword(password, user)) {
+//   res.status(400).send({status: "error", message: "credenciales Invalidas"})
+//     }
+//   } catch (error) {
+//     console.log("error en la autenticacion", error);
+//     res
+//       .status(500)
+//       .send({ status: "error", message: "Error interno del servidor" });
+//   }
+// });
+
 module.exports = router;
